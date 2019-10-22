@@ -48,8 +48,7 @@ public class DataBaseClient {
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);
 
-            //
-            db.execSQL("INSERT INTO Users (login, password, nom, prenom) VALUES(\"MauP\",\"123\",\"Maurice\", \"Philippe\");");
+            //ajouter des lignes ici
 
         }
     };
