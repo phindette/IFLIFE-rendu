@@ -9,6 +9,6 @@ public class Humeur extends Statistique{
     @Override
     public int getTaux() {
         int t = super.getTaux();
-        return (int) (t*5/100);
+        return (int)(t*5/100) + 1;
     }
 }
