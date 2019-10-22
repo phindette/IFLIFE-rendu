@@ -1,8 +1,8 @@
 package com.example.myapplication.Modele;
-
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Utilisateur {
+public class Utilisateur implements Serializable {
     private String nom;
     private String sexe;
     private ArrayList<Competences> competences;
