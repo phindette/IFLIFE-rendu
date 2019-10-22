@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">My Application</string>
-    <string name="energie">Energie :</string>
-    <string name="satiete">Satiété</string>
-    <string name="hygiene">Hygiène</string>
-    <string name="humeur">Humeur</string>
+    <string name="energie">Energie : </string>
+    <string name="satiete">Satiété : </string>
+    <string name="hygiene">Hygiène : </string>
+    <string name="humeur">Humeur : </string>
 </resources>
