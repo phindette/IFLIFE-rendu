@@ -1,6 +1,4 @@
 package com.example.myapplication.Modele;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 
 public class MyApplication {
@@ -18,24 +16,49 @@ public class MyApplication {
         hygiene = new Statistique("Hygiène");
         humeur = new Humeur();
         calendrier = new Calendrier();
+        utilisateur = new Utilisateur();
     }
 
     public void prendreDouche(){
-        utilisateur.augmenterHygiene(50);
-        calendrier.ajouterMinutes(20);
+        getUtilisateur().augmenterHygiene(50);
+        getCalendrier().ajouterMinutes(20);
     }
 
     public void manger(Activite a){
-        utilisateur.augmenterSatiete(50);
+        getUtilisateur().augmenterSatiete(50);
         //Action instantanée
     }
 
     public void dormir(){
-        utilisateur.augmenterEnergie(75);
-        calendrier.ajouterHeure(6);
+        getUtilisateur().augmenterEnergie(75);
+        getCalendrier().ajouterHeure(6);
     }
 
     public void calculerHumer(){
-        utilisateur.getHumeur();
+        getUtilisateur().getHumeur();
+    }
+
+    public Statistique getEnergie() {
+        return energie;
+    }
+
+    public Statistique getSatiete() {
+        return satiete;
+    }
+
+    public Statistique getHygiene() {
+        return hygiene;
+    }
+
+    public Humeur getHumeur() {
+        return humeur;
+    }
+
+    public Calendrier getCalendrier() {
+        return calendrier;
+    }
+
+    public Utilisateur getUtilisateur() {
+        return utilisateur;
     }
 }
