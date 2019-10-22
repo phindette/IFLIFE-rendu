@@ -10,6 +10,9 @@ public class MyApplication {
     private Statistique hygiene;
     private Humeur humeur;
     private Calendar calendar;
+    private Utilisateur utilisateur;
+
+
 
     public MyApplication(){
         energie = new Statistique("Energie");
@@ -17,5 +20,8 @@ public class MyApplication {
         hygiene = new Statistique("Hygiène");
         humeur = new Humeur();
         calendar = new GregorianCalendar(2018,9,1,7,0,0);
+
     }
+
+
 }
