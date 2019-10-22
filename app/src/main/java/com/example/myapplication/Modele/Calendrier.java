@@ -19,9 +19,9 @@ public class Calendrier {
         jours.addAll(namesList);
     }
 
-    public Calendrier(int year, int month, int dayofMonth, int hourOfDay, int minute){
+    public Calendrier(int year, int month, int dayOfMonth, int hourOfDay, int minute){
         sdf = new SimpleDateFormat("yyyy MMM dd HH:mm");
-        calendar = new GregorianCalendar(year,month,dayofMonth,hourOfDay,minute,0);
+        calendar = new GregorianCalendar(year,month,dayOfMonth,hourOfDay,minute,0);
         jours = new ArrayList<>();
         List<String> namesList = Arrays.asList( "lundi", "mardi", "mercredi","jeudi","vendredi","samedi","dimanche");
         jours.addAll(namesList);

@@ -1,10 +1,11 @@
 package com.example.myapplication.Modele;
 
-import android.arch.persistence.db.SupportSQLiteDatabase;
-import android.arch.persistence.room.Room;
-import android.arch.persistence.room.RoomDatabase;
+import androidx.annotation.NonNull;
+import androidx.room.Room;
+import androidx.room.RoomDatabase;
+import androidx.sqlite.db.SupportSQLiteDatabase;
+
 import android.content.Context;
-import android.support.annotation.NonNull;
 
 public class DataBaseClient {
 
@@ -12,7 +13,7 @@ public class DataBaseClient {
     private static DataBaseClient instance;
 
     // Objet représentant la base de données de votre application
-    private AppDatabase appDatabase;
+    private AppDataBase appDatabase;
 
     // Constructeur
     private DataBaseClient(final Context context) {
@@ -23,7 +24,7 @@ public class DataBaseClient {
         //appDatabase = Room.databaseBuilder(context, AppDatabase.class, "MyToDos").build();
 
         // Ajout de la méthode addCallback permettant de populate (remplir) la base de données à sa création
-        appDatabase = Room.databaseBuilder(context, AppDatabase.class, "DB").addCallback(roomDatabaseCallback).build();
+        appDatabase = Room.databaseBuilder(context, AppDataBase.class, "DB").addCallback(roomDatabaseCallback).build();
     }
 
     // Méthode statique
@@ -36,7 +37,7 @@ public class DataBaseClient {
     }
 
     // Retourne l'objet représentant la base de données de votre application
-    public AppDatabase getAppDatabase() {
+    public AppDataBase getAppDatabase() {
         return appDatabase;
     }
 
