@@ -1,7 +1,9 @@
 package com.example.myapplication.Modele;
 
 public class Partiel {
+
     private String nom;
+    private Competences competenceAPasser;
     private int tauxRequis;
 
     Partiel(String nom, int tauxRequis) {
@@ -23,5 +25,13 @@ public class Partiel {
 
     public void setTauxRequis(int tauxRequis) {
         this.tauxRequis = tauxRequis;
+    }
+
+    public Competences getCompetenceAPasser() {
+        return competenceAPasser;
+    }
+
+    public void setCompetenceAPasser(Competences competenceAPasser) {
+        this.competenceAPasser = competenceAPasser;
     }
 }
