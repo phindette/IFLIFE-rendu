@@ -11,7 +11,13 @@ public class Utilisateur implements Serializable {
     private Statistique hygiene;
     private Humeur humeur;
 
-
+    Utilisateur(){
+        energie = new Statistique("Energie");
+        satiete = new Statistique("Satiété");
+        hygiene = new Statistique("Hygiène");
+        humeur = new Humeur();
+        competences = new ArrayList<Competences>();
+    }
 
     public String getNom() {
         return nom;
