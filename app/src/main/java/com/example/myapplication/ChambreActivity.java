@@ -202,7 +202,7 @@ public class ChambreActivity extends AppCompatActivity {
         LinearLayout layouttete = new LinearLayout(this);
         layouttete.setOrientation(LinearLayout.HORIZONTAL);
 
-        TextView vuetext = new TextView(this);
+        final TextView vuetext = new TextView(this);
         vuetext.setText("Vous avez "+application.getUtilisateur().getArgent()+" €");
         layouttete.addView(vuetext);
         layoutGlobal.addView(layouttete);
@@ -235,12 +235,11 @@ public class ChambreActivity extends AppCompatActivity {
             layout.setBackgroundResource(R.drawable.border);
             layout.setClickable(true);
 
-            nourri = nourritures.get(i);
+            final Nourriture nourriture = nourritures.get(i);
             layout.setOnClickListener(new View.OnClickListener(){
                 public void onClick(View view){
-                    afficheShopNourriture();
-
-                    application.getUtilisateur().acheterNourriture(nourri);
+                    application.getUtilisateur().acheterNourriture(nourriture);
+                    vuetext.setText("Vous avez "+application.getUtilisateur().getArgent()+" €");
                 }
             });
 
