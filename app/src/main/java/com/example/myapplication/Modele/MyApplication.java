@@ -27,14 +27,14 @@ public class MyApplication {
 
         setPrendreDouche(new Activite("Se doucher",50,1));
         setManger(new Activite("Se nourrir",50,0));
-        setSeLaver(new Activite("Se laver",50,1));
+        setSeLaver(new Activite("Se laver",80,1));
 
         setReviser(new Activite("Reviser",50,0));
         setDormir(new Activite("Se coucher",50,0));
     }
 
     public void prendreDouche(){
-        getUtilisateur().augmenterHygiene(50);
+        getUtilisateur().augmenterHygiene(seLaver.getStat());
         getCalendrier().ajouterMinutes(20);
     }
 
