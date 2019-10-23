@@ -156,6 +156,10 @@ public class ChambreActivity extends AppCompatActivity {
         LinearLayout layout = new LinearLayout(this);
         Button boutonLivre = new Button(this);
 
+
+        alertDialogBuilder.setView(layout);
+        AlertDialog alertD = alertDialogBuilder.create();
+
         boutonLivre.setText("Livres");
         boutonLivre.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
@@ -164,8 +168,6 @@ public class ChambreActivity extends AppCompatActivity {
         });
         layout.addView(boutonLivre);
 
-        AlertDialog alertDialog = alertDialogBuilder.create();
-        alertDialog.show();
 
         Button boutonNourriture = new Button(this);
 
@@ -173,12 +175,12 @@ public class ChambreActivity extends AppCompatActivity {
         boutonNourriture.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
                 afficheShopNourriture();
+
             }
         });
 
         layout.addView(boutonNourriture);
-        alertDialogBuilder.setView(layout);
-        AlertDialog alertD = alertDialogBuilder.create();
+
         alertD.show();
 
 
