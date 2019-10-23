@@ -30,9 +30,12 @@ public class Calendrier {
     public void ajouterJour(int n){
         calendar.add(Calendar.DAY_OF_MONTH, n);
     }
+
     public void ajouterHeure(int n){
-        calendar.add(Calendar.HOUR_OF_DAY, n);
+        calendar.add(Calendar.HOUR,n);
+        //calendar.set(Calendar.HOUR_OF_DAY, calendar.get(Calendar.HOUR)+n);
     }
+
     public void ajouterMinutes(int n){
         calendar.add(Calendar.MINUTE, n);
     }
@@ -40,6 +43,7 @@ public class Calendrier {
     public String getJour(){
         return jours.get(calendar.get(Calendar.DAY_OF_WEEK));
     }
+
     public int getJourDuMois(){ return calendar.get(Calendar.DAY_OF_MONTH);
     }
 

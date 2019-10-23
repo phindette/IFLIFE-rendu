@@ -12,7 +12,6 @@ import android.widget.NumberPicker;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.myapplication.Modele.MyApplication;
 
 import java.util.Arrays;
@@ -69,7 +68,7 @@ public class ChambreActivity extends AppCompatActivity {
                             @Override
                             public void run() {
                                 //UPDATE DE LA DATE
-                                nomJournee.setText(application.getCalendrier().getJour());
+                               // nomJournee.setText(application.getCalendrier().getJour());
                                 numeroJour.setText("Jour "+application.getCalendrier().getJourDuMois());
 
                                 //UPDATE DES PROGRESS BAR
@@ -108,6 +107,11 @@ public class ChambreActivity extends AppCompatActivity {
         alertDialogBuilder.setPositiveButton("Valider", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 Toast.makeText(ChambreActivity.this,"Vous allez dormir : "+numberPicker.getValue()+" heures",Toast.LENGTH_SHORT).show();
+
+                //Gestion du modèle
+                application.getDormir().setHeure(numberPicker.getValue());
+                application.dormir();
+
             }
         });
         AlertDialog alertDialog = alertDialogBuilder.create();
