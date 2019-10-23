@@ -67,6 +67,7 @@ public class ChambreActivity extends AppCompatActivity {
         livres = new ArrayList<>();
         listcomp = new ArrayList<>();
         init_nourriture();
+        System.out.println("pute");
 
         //Initialisation des compétences et des livres (à modif en DAO)
         init_competences();
