@@ -1,13 +1,22 @@
 package com.example.myapplication;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.NumberPicker;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.myapplication.Modele.MyApplication;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class ChambreActivity extends AppCompatActivity {
     public MyApplication application;
@@ -84,5 +93,25 @@ public class ChambreActivity extends AppCompatActivity {
 
     public void seDoucher(){
         application.prendreDouche();
+    }
+
+    public void cliqueBtnDormir(View w){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ChambreActivity.this);
+        alertDialogBuilder.setTitle("Combien d'heures voulez vous dormir ?");
+
+        final NumberPicker numberPicker = new NumberPicker(this);
+        numberPicker.setMaxValue(8);
+        numberPicker.setMinValue(6);
+        alertDialogBuilder.setView(numberPicker);
+
+
+        alertDialogBuilder.setPositiveButton("Valider", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(ChambreActivity.this,"Vous allez dormir : "+numberPicker.getValue()+" heures",Toast.LENGTH_SHORT).show();
+            }
+        });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+
     }
 }
