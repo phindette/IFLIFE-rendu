@@ -88,14 +88,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:background="@color/colorAccent"
-                android:onClick="cliqueBtnDouche">
+                >
 
                 <ImageButton
                     android:id="@+id/btnShower"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
-                    app:srcCompat="@drawable/shower2" />
+                    app:srcCompat="@drawable/shower2"
+                    android:onClick="cliqueBtnDouche"/>
 
                 <Space
                     android:layout_width="60dip"
