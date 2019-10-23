@@ -9,97 +9,90 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <TableLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-            <TableRow
+            <TableLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/textDay"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center|center_horizontal|center_vertical"
+                        android:text="Jour 1"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/textDayOfTheWeek"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center|center_horizontal|center_vertical"
+                        android:text="Dimanche"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+                </TableRow>
+
+            </TableLayout>
+
+            <Space
+                android:layout_width="10dip"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/textHour"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="00:00"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+
+            <ImageButton
+                android:id="@+id/btnSchedule"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/schedule" />
+
+            <ImageButton
+                android:id="@+id/btnPurse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/purse" />
+
+            <ImageButton
+                android:id="@+id/btnSkills"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/skills" />
+
+            <ImageButton
+                android:id="@+id/btnHamburger"
                 android:layout_width="match_parent"
-                android:layout_height="80dip"
-                android:gravity="top">
+                android:layout_height="match_parent"
+                android:adjustViewBounds="false"
+                android:background="@android:color/transparent"
+                android:scaleType="fitEnd"
+                app:srcCompat="@drawable/hamburger" />
 
-                <TableLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center">
-
-                    <TableRow
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <TextView
-                            android:id="@+id/textDay"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center|center_horizontal|center_vertical"
-                            android:text="Jour 1"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
-                    </TableRow>
-
-                    <TableRow
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <TextView
-                            android:id="@+id/textDayOfTheWeek"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center|center_horizontal|center_vertical"
-                            android:text="Lundi"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
-                    </TableRow>
-
-                </TableLayout>
-
-                <Space
-                    android:layout_width="10dip"
-                    android:layout_height="wrap_content" />
-
-                <TextView
-                    android:id="@+id/textHour"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="00:00"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
-
-                <Space
-                    android:layout_width="68dip"
-                    android:layout_height="wrap_content" />
-
-                <ImageButton
-                    android:id="@+id/btnSchedule"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/schedule"
-                    />
-
-                <ImageButton
-                    android:id="@+id/btnPurse"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/purse"
-                    android:onClick="cliqueBtnShop"/>
-
-                <ImageButton
-                    android:id="@+id/btnSettings"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/settings" />
-
-                <ImageButton
-                    android:id="@+id/btnHamburger"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:adjustViewBounds="false"
-                    android:background="@android:color/transparent"
-                    app:srcCompat="@drawable/hamburger" />
-
-            </TableRow>
-
-        </TableLayout>
+        </LinearLayout>
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -113,8 +106,7 @@
 
                 <TableLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    >
+                    android:layout_height="wrap_content">
 
                     <TableRow
                         android:layout_width="wrap_content"
@@ -125,8 +117,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@android:color/transparent"
-                            app:srcCompat="@drawable/shower2"
-                            android:onClick="cliqueBtnDouche"/>
+                            app:srcCompat="@drawable/shower2" />
 
                         <Space
                             android:layout_width="60dip"
@@ -140,7 +131,7 @@
                             app:srcCompat="@drawable/lavabo2" />
 
                         <Space
-                            android:layout_width="30dip"
+                            android:layout_width="25dip"
                             android:layout_height="60dip" />
 
                         <ImageButton
@@ -170,21 +161,16 @@
                             android:background="@android:color/transparent"
                             app:srcCompat="@drawable/books" />
 
-                        <Space
-                            android:layout_width="10dip"
-                            android:layout_height="130dip" />
-
                         <ImageButton
                             android:id="@+id/btnBed"
                             android:layout_width="wrap_content"
                             android:layout_height="180dip"
                             android:adjustViewBounds="false"
                             android:background="@android:color/transparent"
-                            app:srcCompat="@drawable/lit"
-                            android:onClick="cliqueBtnDormir"/>
+                            app:srcCompat="@drawable/lit" />
 
                         <Space
-                            android:layout_width="180dip"
+                            android:layout_width="130dip"
                             android:layout_height="wrap_content" />
 
                         <ImageButton
@@ -238,116 +224,149 @@
 
         </FrameLayout>
 
-        <TableLayout
+        <Space
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="5dip" />
 
-            <TableRow
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center"/>
+                android:gravity="center">
 
-        </TableLayout>
+                <ProgressBar
+                    android:id="@+id/humeurBar"
+                    style="@android:style/Widget.ProgressBar.Horizontal"
+                    android:layout_width="240dip"
+                    android:layout_height="30dip"
+                    android:layout_gravity="center"
+                    android:progress="50" />
 
-        <TableLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/textHumeur"
+                    android:layout_width="200dip"
+                    android:layout_height="22dip"
+                    android:layout_alignLeft="@id/humeurBar"
+                    android:layout_alignTop="@id/humeurBar"
+                    android:layout_alignRight="@id/humeurBar"
+                    android:layout_alignBottom="@id/humeurBar"
+                    android:background="#00000000"
+                    android:gravity="center"
+                    android:text="@string/humeur"
+                    android:textAllCaps="false"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    app:fontFamily="sans-serif-medium" />
 
-            <TableRow
+            </RelativeLayout>
+
+            <Space
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="5dip" />
 
-                <EditText
-                    android:layout_width="80dip"
-                    android:layout_height="wrap_content"
-                    android:text="@string/energie"></EditText>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center">
 
                 <ProgressBar
                     android:id="@+id/energieBar"
                     style="@android:style/Widget.ProgressBar.Horizontal"
                     android:layout_width="200dip"
-                    android:layout_height="match_parent"
+                    android:layout_height="22dip"
+                    android:layout_gravity="center"
                     android:progress="50" />
 
-            </TableRow>
+                <TextView
+                    android:id="@+id/textEnergie"
+                    android:layout_width="200dip"
+                    android:layout_height="22dip"
+                    android:layout_alignLeft="@id/energieBar"
+                    android:layout_alignTop="@id/energieBar"
+                    android:layout_alignRight="@id/energieBar"
+                    android:layout_alignBottom="@id/energieBar"
+                    android:background="#00000000"
+                    android:gravity="center"
+                    android:text="@string/energie"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@android:color/black"
+                    app:fontFamily="sans-serif-condensed-medium" />
 
-        </TableLayout>
+            </RelativeLayout>
 
-        <TableLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TableRow
+            <Space
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="5dip" />
 
-                <EditText
-                    android:layout_width="80dip"
-                    android:layout_height="wrap_content"
-                    android:text="@string/satiete"></EditText>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center">
 
                 <ProgressBar
                     android:id="@+id/satieteBar"
                     style="@android:style/Widget.ProgressBar.Horizontal"
                     android:layout_width="200dip"
-                    android:layout_height="match_parent"
+                    android:layout_height="22dip"
+                    android:layout_gravity="center"
                     android:progress="50" />
 
-            </TableRow>
+                <TextView
+                    android:id="@+id/textSatiete"
+                    android:layout_width="200dip"
+                    android:layout_height="22dip"
+                    android:layout_alignLeft="@id/satieteBar"
+                    android:layout_alignTop="@id/satieteBar"
+                    android:layout_alignRight="@id/satieteBar"
+                    android:layout_alignBottom="@id/satieteBar"
+                    android:background="#00000000"
+                    android:gravity="center"
+                    android:text="@string/satiete"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@android:color/black"
+                    app:fontFamily="sans-serif-condensed-medium" />
 
-        </TableLayout>
+            </RelativeLayout>
 
-        <TableLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TableRow
+            <Space
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="5dip" />
 
-                <EditText
-                    android:layout_width="80dip"
-                    android:layout_height="wrap_content"
-                    android:text="@string/hygiene"></EditText>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center">
 
                 <ProgressBar
                     android:id="@+id/hygieneBar"
                     style="@android:style/Widget.ProgressBar.Horizontal"
                     android:layout_width="200dip"
-                    android:layout_height="match_parent"
+                    android:layout_height="22dip"
+                    android:layout_gravity="center"
                     android:progress="50" />
 
-            </TableRow>
-
-        </TableLayout>
-
-        <TableLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <EditText
-                    android:layout_width="80dip"
-                    android:layout_height="wrap_content"
-                    android:text="@string/humeur"></EditText>
-
-                <ProgressBar
-                    android:id="@+id/humeurBar"
-                    style="@android:style/Widget.ProgressBar.Horizontal"
+                <TextView
+                    android:id="@+id/textHygiene"
                     android:layout_width="200dip"
-                    android:layout_height="match_parent"
-                    android:progress="50" />
+                    android:layout_height="22dip"
+                    android:layout_alignLeft="@id/hygieneBar"
+                    android:layout_alignTop="@id/hygieneBar"
+                    android:layout_alignRight="@id/hygieneBar"
+                    android:layout_alignBottom="@id/hygieneBar"
+                    android:background="#00000000"
+                    android:gravity="center"
+                    android:text="@string/hygiene"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@android:color/black"
+                    app:fontFamily="sans-serif-condensed-medium" />
 
-                <Space
-                    android:layout_width="98dip"
-                    android:layout_height="wrap_content" />
+            </RelativeLayout>
 
-            </TableRow>
 
-        </TableLayout>
+        </LinearLayout>
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
