@@ -15,7 +15,7 @@ public class Competences {
     @ColumnInfo(name = "tauxMaitrise")
     private int tauxMaitrise;
 
-    Competences(String nom, int tauxMaitrise) {
+    public Competences(String nom, int tauxMaitrise) {
         setNom(nom);
         setTauxMaitrise(tauxMaitrise);
     }

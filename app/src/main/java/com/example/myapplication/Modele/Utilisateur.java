@@ -44,6 +44,12 @@ public class Utilisateur implements Serializable {
         competences = new ArrayList<Competences>();
         argent = 100; //à changer
     }
+    public void addCompetence(Competences competences){
+        if(!this.competences.contains(competences)){
+            this.competences.add(competences);
+        }
+
+    }
 
     public double getArgent(){
         return argent;
@@ -65,6 +71,18 @@ public class Utilisateur implements Serializable {
         if(nourriture.getCout() < this.getArgent()){
             retirerArgent(nourriture.getCout());
             augmenterSatiete(nourriture.getMontantRegen());
+        }
+    }
+    public void acheterLivre(Livres livre){
+        if(livre.getCout()<this.getArgent()){
+            retirerArgent(livre.getCout());
+            int i = 0;
+            while(i < competences.size() && competences.get(i) != livre.getCompetence()){
+                i++;
+            }
+            if(competences.get(i) == livre.getCompetence()){
+                competences.get(i).augmenterTaux(livre.getAugmentation());
+            }
         }
     }
 
