@@ -1,7 +1,18 @@
 package com.example.myapplication.Modele;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity
 public class Competences {
+    @PrimaryKey(autoGenerate = true)
+    private int id;
+
+    @ColumnInfo(name = "nom")
     private String nom;
+
+    @ColumnInfo(name = "tauxMaitrise")
     private int tauxMaitrise;
 
     Competences(String nom, int tauxMaitrise) {
@@ -31,5 +42,13 @@ public class Competences {
 
     public void setTauxMaitrise(int tauxMaitrise) {
         this.tauxMaitrise = tauxMaitrise;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

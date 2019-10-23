@@ -1,10 +1,28 @@
 package com.example.myapplication.Modele;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity
 public class Nourriture {
+
+    @PrimaryKey(autoGenerate = true)
+    private int id;
+
+    @ColumnInfo(name = "nom")
     private String nom;
+
+    @ColumnInfo(name = "description")
     private String description;
+
+    @ColumnInfo(name = "montantRegen")
     private int montantRegen;
+
+    @ColumnInfo(name = "pathImage")
     private String pathImage;
+
+    @ColumnInfo(name = "cout")
     private double cout;
 
 

@@ -14,8 +14,8 @@ public interface DateDAO {
     @Query("SELECT * FROM Date")
     List<Date> getAll();
 
-    @Query("SELECT * FROM Date")
-    List<Date> getLast();
+    @Query("SELECT * FROM Date order by id desc limit 1")
+    Date getLast();
 
     @Insert
     void insert(Date date);

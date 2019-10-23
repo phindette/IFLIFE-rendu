@@ -1,15 +1,39 @@
 package com.example.myapplication.Modele;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
+@Entity
 public class Utilisateur implements Serializable {
+    @PrimaryKey(autoGenerate = true)
+    private int id;
+
+    @ColumnInfo(name = "nom")
     private String nom;
+
+    @ColumnInfo(name = "sexe")
     private String sexe;
+
+    @Ignore
     private ArrayList<Competences> competences;
+
+    @Ignore
     private Statistique energie;
+
+    @Ignore
     private Statistique satiete;
+
+    @Ignore
     private Statistique hygiene;
+
+    @Ignore
     private Humeur humeur;
+
+    @Ignore
     private double argent;
 
     Utilisateur(){

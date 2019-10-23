@@ -1,9 +1,25 @@
 package com.example.myapplication.Modele;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity
 public class Statistique {
+
+    @PrimaryKey(autoGenerate = true)
+    private int id;
+
+    @ColumnInfo(name = "taux")
     private int taux;
+
+    @ColumnInfo(name = "nom")
     private String nom;
+
+    @ColumnInfo(name = "borneMin")
     private int bornMin;
+
+    @ColumnInfo(name = "borneMax")
     private int borneMax;
 
     Statistique(String nomstat){
