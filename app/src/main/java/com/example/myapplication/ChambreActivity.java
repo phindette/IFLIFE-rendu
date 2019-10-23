@@ -4,6 +4,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.solver.widgets.ConstraintHorizontalLayout;
 
+import android.app.Application;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -19,6 +20,9 @@ import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.myapplication.Modele.Competences;
+import com.example.myapplication.Modele.Livres;
 import com.example.myapplication.Modele.MyApplication;
 import com.example.myapplication.Modele.Nourriture;
 
@@ -38,7 +42,9 @@ public class ChambreActivity extends AppCompatActivity {
     public Thread  thread;
     public TextView textHour;
     private ArrayList<Nourriture> nourritures;
+    private ArrayList<Livres> livres;
     private Nourriture nourri; //A changer par un appel à la base de donnée quand données persistantes. Utilisé dans l'achat de nourriture.
+    private ArrayList<Competences> listcomp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +64,13 @@ public class ChambreActivity extends AppCompatActivity {
 
         //Initialisation de la nourriture (à modif en DAO)
         nourritures = new ArrayList<>();
+        livres = new ArrayList<>();
+        listcomp = new ArrayList<>();
         init_nourriture();
+
+        //Initialisation des compétences et des livres (à modif en DAO)
+        init_competences();
+        init_livres();
 
         //Ligne de test pour les barres
         //application.getUtilisateur().augmenterSatiete(150);
@@ -168,7 +180,7 @@ public class ChambreActivity extends AppCompatActivity {
         boutonLivre.setText("Livres");
         boutonLivre.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
-                Toast.makeText(ChambreActivity.this,"clic sur le shop Livres",Toast.LENGTH_SHORT).show();
+                afficheShopLivre();
             }
         });
         layout.addView(boutonLivre);
@@ -252,6 +264,67 @@ public class ChambreActivity extends AppCompatActivity {
         alertD.show();
     }
 
+    private void afficheShopLivre(){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ChambreActivity.this);
+        alertDialogBuilder.setTitle("Choisir l'article à acheter");
+
+        ScrollView scrollView = new ScrollView(this);
+        LinearLayout layoutGlobal = new LinearLayout(this);
+        layoutGlobal.setOrientation(LinearLayout.VERTICAL);
+
+        LinearLayout layouttete = new LinearLayout(this);
+        layouttete.setOrientation(LinearLayout.HORIZONTAL);
+
+        final TextView vuetext = new TextView(this);
+        vuetext.setText("Vous avez "+application.getUtilisateur().getArgent()+" €");
+        layouttete.addView(vuetext);
+        layoutGlobal.addView(layouttete);
+
+        for(int i = 0; i< livres.size();i++){
+            LinearLayout layout = new LinearLayout(this);
+            layout.setOrientation(LinearLayout.HORIZONTAL);
+
+            //ajout de l'image
+            File imgFile = new File(livres.get(i).getPathImage());
+            if(imgFile.exists()){
+
+                Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+
+                ImageView myImage = new ImageView(this);
+
+                myImage.setImageBitmap(myBitmap);
+
+                layout.addView(myImage);
+            }
+            //ajout de la regen
+            TextView regen = new TextView(this);
+            regen.setText("restore "+livres.get(i).getAugmentation() + "points de compétences");
+            layout.addView(regen);
+
+            //ajout du prix
+            TextView prix = new TextView(this);
+            prix.setText("coûte "+livres.get(i).getCout()+" € /u");
+            layout.addView(prix);
+            layout.setBackgroundResource(R.drawable.border);
+            layout.setClickable(true);
+
+            final Livres livre = livres.get(i);
+            layout.setOnClickListener(new View.OnClickListener(){
+                public void onClick(View view){
+                    application.getUtilisateur().acheterLivre(livre);
+                    vuetext.setText("Vous avez "+application.getUtilisateur().getArgent()+" €");
+                }
+            });
+
+            layoutGlobal.addView(layout);
+        }
+
+        scrollView.addView(layoutGlobal);
+        alertDialogBuilder.setView(scrollView);
+        AlertDialog alertD = alertDialogBuilder.create();
+        alertD.show();
+    }
+
 
 
     private void init_nourriture(){
@@ -265,5 +338,26 @@ public class ChambreActivity extends AppCompatActivity {
         nourritures.add(bkebab);
         Nourriture patesausel = new Nourriture("Pates au sel","Efficace et pas cher, c'est les pates au sel que je préfère",30, 2.0);
         nourritures.add(patesausel);
+    }
+
+    private void init_competences(){
+        Competences ada = new Competences("Ada",0);
+        application.getUtilisateur().addCompetence(ada);
+        listcomp.add(ada);
+        Competences sql = new Competences("Postgress",0);
+        application.getUtilisateur().addCompetence(sql);
+        listcomp.add(sql);
+        Competences htmlcss = new Competences("html/css",0);
+        application.getUtilisateur().addCompetence(htmlcss);
+        listcomp.add(htmlcss);
+    }
+
+    private void init_livres(){
+        Livres livreAdaN = new Livres("Manuel d'ada novice","Apprendre les bases de l'ada",10,10.5,listcomp.get(0));
+        livres.add(livreAdaN);
+        Livres sqlN = new Livres("Manuel de postgress novice","Apprendre les bases de postgress",10,10.5,listcomp.get(1));
+        livres.add(sqlN);
+        Livres htmlcssN = new Livres("Manuel d'html/css novice","Apprendre les bases de html/css",10,10.5,listcomp.get(2));
+        livres.add(htmlcssN);
     }
 }

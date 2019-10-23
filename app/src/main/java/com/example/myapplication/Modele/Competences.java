@@ -4,7 +4,7 @@ public class Competences {
     private String nom;
     private int tauxMaitrise;
 
-    Competences(String nom, int tauxMaitrise) {
+    public Competences(String nom, int tauxMaitrise) {
         setNom(nom);
         setTauxMaitrise(tauxMaitrise);
     }
