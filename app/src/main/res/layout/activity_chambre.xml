@@ -67,6 +67,7 @@
                     android:id="@+id/btnPurse"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:onClick="cliqueBtnShop"
                     app:srcCompat="@drawable/purse" />
 
                 <ImageButton
