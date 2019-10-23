@@ -74,7 +74,6 @@ public class ChambreActivity extends AppCompatActivity {
 
     public void jeu() {
            thread = new Thread() {
-               int i =0;
             @Override
             public void run() {
                 try {
@@ -111,6 +110,7 @@ public class ChambreActivity extends AppCompatActivity {
     }
 
     public void cliqueBtnDormir(View w){
+        //FONCTION PERMETTANT A L'UTiLISATEUR DE DORMIR
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ChambreActivity.this);
         alertDialogBuilder.setTitle("Combien d'heures voulez vous dormir ?");
 
@@ -126,13 +126,27 @@ public class ChambreActivity extends AppCompatActivity {
 
                 //Gestion du modèle
                 application.getDormir().setHeure(numberPicker.getValue());
+                switch(numberPicker.getValue()){
+                    case 6 :
+                        application.getDormir().setStat(60);
+                        break;
+                    case 7 :
+                        application.getDormir().setStat(70);
+                        break;
+                    case 8 :
+                        application.getDormir().setStat(80);
+                        break;
+                }
                 application.dormir();
 
             }
         });
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
+    }
 
+    public void cliqueBtnDouche(View w){
+        application.prendreDouche();
     }
 
     public void cliqueBtnShop(View w){
