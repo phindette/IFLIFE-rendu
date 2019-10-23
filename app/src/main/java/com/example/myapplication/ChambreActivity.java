@@ -68,7 +68,7 @@ public class ChambreActivity extends AppCompatActivity {
                             @Override
                             public void run() {
                                 //UPDATE DE LA DATE
-                               // nomJournee.setText(application.getCalendrier().getJour());
+                                nomJournee.setText(application.getCalendrier().getJour());
                                 numeroJour.setText("Jour "+application.getCalendrier().getJourDuMois());
 
                                 //UPDATE DES PROGRESS BAR
