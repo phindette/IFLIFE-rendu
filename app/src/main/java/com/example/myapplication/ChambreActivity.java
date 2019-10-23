@@ -120,6 +120,7 @@ public class ChambreActivity extends AppCompatActivity {
         alertDialogBuilder.setView(numberPicker);
 
 
+
         alertDialogBuilder.setPositiveButton("Valider", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 Toast.makeText(ChambreActivity.this,"Vous allez dormir : "+numberPicker.getValue()+" heures",Toast.LENGTH_SHORT).show();
