@@ -37,6 +37,7 @@ public class ChambreActivity extends AppCompatActivity {
     public ProgressBar barreHumeur;
     public Thread  thread;
     private ArrayList<Nourriture> nourritures;
+    private Nourriture nourri; //A changer par un appel à la base de donnée quand données persistantes. Utilisé dans l'achat de nourriture.
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -195,6 +196,14 @@ public class ChambreActivity extends AppCompatActivity {
         LinearLayout layoutGlobal = new LinearLayout(this);
         layoutGlobal.setOrientation(LinearLayout.VERTICAL);
 
+        LinearLayout layouttete = new LinearLayout(this);
+        layouttete.setOrientation(LinearLayout.HORIZONTAL);
+
+        TextView vuetext = new TextView(this);
+        vuetext.setText("Vous avez "+application.getUtilisateur().getArgent()+" €");
+        layouttete.addView(vuetext);
+        layoutGlobal.addView(layouttete);
+
         for(int i = 0; i< nourritures.size();i++){
             LinearLayout layout = new LinearLayout(this);
             layout.setOrientation(LinearLayout.HORIZONTAL);
@@ -222,6 +231,15 @@ public class ChambreActivity extends AppCompatActivity {
             layout.addView(prix);
             layout.setBackgroundResource(R.drawable.border);
             layout.setClickable(true);
+
+            nourri = nourritures.get(i);
+            layout.setOnClickListener(new View.OnClickListener(){
+                public void onClick(View view){
+                    afficheShopNourriture();
+
+                    application.getUtilisateur().acheterNourriture(nourri);
+                }
+            });
 
             layoutGlobal.addView(layout);
         }

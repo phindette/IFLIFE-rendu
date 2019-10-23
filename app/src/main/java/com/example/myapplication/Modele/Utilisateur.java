@@ -10,6 +10,7 @@ public class Utilisateur implements Serializable {
     private Statistique satiete;
     private Statistique hygiene;
     private Humeur humeur;
+    private double argent;
 
     Utilisateur(){
         energie = new Statistique("Energie");
@@ -17,6 +18,30 @@ public class Utilisateur implements Serializable {
         hygiene = new Statistique("Hygiène");
         humeur = new Humeur();
         competences = new ArrayList<Competences>();
+        argent = 100; //à changer
+    }
+
+    public double getArgent(){
+        return argent;
+    }
+    public void ajouterArgent(double montant){
+        argent = argent + montant;
+    }
+
+    public boolean retirerArgent(double montant){
+        if(argent - montant < 0){
+            return false;
+        }else{
+            argent = argent - montant;
+            return true;
+        }
+    }
+
+    public void acheterNourriture(Nourriture nourriture){
+        if(nourriture.getCout() < this.getArgent()){
+            retirerArgent(nourriture.getCout());
+            augmenterSatiete(nourriture.getMontantRegen());
+        }
     }
 
     public String getNom() {
