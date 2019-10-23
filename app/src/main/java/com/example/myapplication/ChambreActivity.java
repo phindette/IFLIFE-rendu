@@ -36,6 +36,7 @@ public class ChambreActivity extends AppCompatActivity {
     public ProgressBar barreHygiene;
     public ProgressBar barreHumeur;
     public Thread  thread;
+    public TextView textHour;
     private ArrayList<Nourriture> nourritures;
 
     @Override
@@ -47,6 +48,7 @@ public class ChambreActivity extends AppCompatActivity {
         application = new MyApplication(); //ligne à changer avec l'initialisation database
         nomJournee = (TextView) findViewById(R.id.textDayOfTheWeek);
         numeroJour = (TextView) findViewById(R.id.textDay);
+        textHour = (TextView) findViewById(R.id.textHour);
 
         barreEnergie = (ProgressBar)  findViewById(R.id.energieBar);
         barreSatiete = (ProgressBar)  findViewById(R.id.satieteBar);
@@ -85,6 +87,7 @@ public class ChambreActivity extends AppCompatActivity {
                                 //UPDATE DE LA DATE
                                 nomJournee.setText(application.getCalendrier().getJour());
                                 numeroJour.setText("Jour "+application.getCalendrier().getJourDuMois());
+                                textHour.setText(application.getCalendrier().getHeure()+":"+application.getCalendrier().getMinutes());
 
                                 //UPDATE DES PROGRESS BAR
                                 barreEnergie.setProgress(application.getUtilisateur().getEnergie().getTaux());

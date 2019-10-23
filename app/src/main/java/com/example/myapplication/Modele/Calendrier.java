@@ -31,10 +31,7 @@ public class Calendrier {
         calendar.add(Calendar.DAY_OF_MONTH, n);
     }
 
-    public void ajouterHeure(int n){
-        calendar.add(Calendar.HOUR,n);
-        //calendar.set(Calendar.HOUR_OF_DAY, calendar.get(Calendar.HOUR)+n);
-    }
+    public void ajouterHeure(int n){calendar.add(Calendar.HOUR,n);}
 
     public void ajouterMinutes(int n){
         calendar.add(Calendar.MINUTE, n);
@@ -47,6 +44,8 @@ public class Calendrier {
     public int getJourDuMois(){ return calendar.get(Calendar.DAY_OF_MONTH);
     }
 
+    public int getHeure(){return calendar.get(Calendar.HOUR_OF_DAY);}
+    public int getMinutes(){return calendar.get(Calendar.MINUTE);}
 
     public String getDate(){
         return sdf.format(calendar.getTime());
