@@ -150,6 +150,7 @@ public class ChambreActivity extends AppCompatActivity {
         application.prendreDouche();
     }
 
+
     public void cliqueBtnDormir(View w){
         //FONCTION PERMETTANT A L'UTiLISATEUR DE DORMIR
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ChambreActivity.this);
@@ -288,6 +289,65 @@ public class ChambreActivity extends AppCompatActivity {
 
         alertD.show();
     }
+
+    public void clickBtnCours(View w){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ChambreActivity.this);
+        if(application.getCalendrier().getHeure() <= 8){
+            //PARTIE POUR ALLER EN COURS
+            alertDialogBuilder.setTitle("Voulez vous allez en cours (vous reviendrez à 17 heures) ?");
+            alertDialogBuilder.setPositiveButton("Oui", new DialogInterface.OnClickListener(){
+                public void onClick(DialogInterface dialog, int which) {
+                    //Passer l'heure à 17
+                    application.getCalendrier().setHeureDeLaJournee(17);
+
+                    //Modification des stats de l'utilisateur d'energies
+                    application.getUtilisateur().getEnergie().setTaux(application.getUtilisateur().getEnergie().getTaux()/2);
+                    application.getUtilisateur().getHygiene().setTaux(application.getUtilisateur().getHygiene().getTaux()/2);
+                    application.getUtilisateur().getSatiete().setTaux(application.getUtilisateur().getSatiete().getTaux()/2);
+
+                    //Modification des stats de l'utlisateur
+                    for(int i =0;i < application.getUtilisateur().getCompetences().size();i++){
+                        if(application.getUtilisateur().getHumeur().getTaux() <= 25){
+                            application.getUtilisateur().getCompetences().get(i).augmenterTaux(5);
+                        }
+                        else if(application.getUtilisateur().getHumeur().getTaux() <= 50){
+                            application.getUtilisateur().getCompetences().get(i).augmenterTaux(10);
+                        }
+                        else if(application.getUtilisateur().getHumeur().getTaux() <= 75){
+                            application.getUtilisateur().getCompetences().get(i).augmenterTaux(15);
+                        }
+                        else if(application.getUtilisateur().getHumeur().getTaux() > 75){
+                            application.getUtilisateur().getCompetences().get(i).augmenterTaux(20);
+                        }
+                    }
+
+                    Toast.makeText(ChambreActivity.this,"Vous êtes allé en cours",Toast.LENGTH_SHORT).show();
+                }
+            });
+            alertDialogBuilder.setNegativeButton("Non", new DialogInterface.OnClickListener(){
+                public void onClick(DialogInterface dialog, int which) {
+                    Toast.makeText(ChambreActivity.this,"Vous décidez de ne pas aller en cours pour le moment",Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+        else{
+            //PARTIE POUR DIRE QUE L'UTILISATEUR A RATE LE COURS
+            alertDialogBuilder.setTitle("Vous avez raté le cours de la journée !");
+            alertDialogBuilder.setPositiveButton("Retour", new DialogInterface.OnClickListener(){
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            });
+        }
+
+
+
+
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
     private void afficheShopNourriture(){
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ChambreActivity.this);
         alertDialogBuilder.setTitle("Choisir l'article à acheter");
@@ -421,6 +481,7 @@ public class ChambreActivity extends AppCompatActivity {
         Partiel partielAda = new Partiel("Examen d'ada",50,application.getUtilisateur().getCompetences().get(0),this,dateDSAda);
         application.getCalendrier().ajouterPartiel(partielAda);
     }
+
     private void init_nourriture(){
         Nourriture tacosS = new Nourriture("Tacos simple","Sans tomates, sans salade et c'est parti !",60, 5.0);
         nourritures.add(tacosS);

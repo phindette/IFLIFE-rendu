@@ -53,6 +53,10 @@ public class Calendrier {
 
 
     public int getHeure(){return getCalendar().get(Calendar.HOUR_OF_DAY);}
+
+    public void setHeureDeLaJournee(int n){
+        getCalendar().set(Calendar.HOUR_OF_DAY,n);
+    }
     public int getMinutes(){return getCalendar().get(Calendar.MINUTE);}
 
     public String getDate(){
