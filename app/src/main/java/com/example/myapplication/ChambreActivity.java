@@ -661,15 +661,6 @@ public class ChambreActivity extends AppCompatActivity {
     }
 
     private void init_competences(){
-//        Competences ada = new Competences("Ada",0);
-//        application.getUtilisateur().addCompetence(ada);
-//        listcomp.add(ada);
-//        Competences sql = new Competences("Postgress",0);
-//        application.getUtilisateur().addCompetence(sql);
-//        listcomp.add(sql);
-//        Competences htmlcss = new Competences("html/css",0);
-//        application.getUtilisateur().addCompetence(htmlcss);
-//        listcomp.add(htmlcss);
 
         // Récupération du DatabaseClient
         final DataBaseClient mDb = DataBaseClient.getInstance(getApplicationContext());
@@ -696,12 +687,6 @@ public class ChambreActivity extends AppCompatActivity {
     }
 
     private void init_livres(){
-//        Livres livreAdaN = new Livres("Manuel d'ada novice","Apprendre les bases de l'ada",10,10.5,listcomp.get(0),getApplicationContext());
-//        livres.add(livreAdaN);
-//        Livres sqlN = new Livres("Manuel de postgress novice","Apprendre les bases de postgress",10,10.5,listcomp.get(1),getApplicationContext());
-//        livres.add(sqlN);
-//        Livres htmlcssN = new Livres("Manuel d'html/css novice","Apprendre les bases de html/css",10,10.5,listcomp.get(2), getApplicationContext());
-//        livres.add(htmlcssN);
 
         // Récupération du DatabaseClient
         final DataBaseClient mDb = DataBaseClient.getInstance(getApplicationContext());
