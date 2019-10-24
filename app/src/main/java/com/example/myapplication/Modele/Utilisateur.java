@@ -36,11 +36,15 @@ public class Utilisateur implements Serializable {
     @Ignore
     private double argent;
 
-    Utilisateur(){
+    public Utilisateur(){
         energie = new Statistique("Energie");
+        energie.setTaux(50);
         satiete = new Statistique("Satiété");
+        satiete.setTaux(50);
         hygiene = new Statistique("Hygiène");
+        hygiene.setTaux(50);
         humeur = new Humeur();
+        humeur.setTaux(50);
         competences = new ArrayList<Competences>();
         argent = 100; //à changer
     }

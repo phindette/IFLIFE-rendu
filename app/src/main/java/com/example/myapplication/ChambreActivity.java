@@ -104,6 +104,15 @@ public class ChambreActivity extends AppCompatActivity {
                                 textHour.setText(application.getCalendrier().getHeure()+":"+application.getCalendrier().getMinutes());
 
                                 //UPDATE DES PROGRESS BAR
+                                TextView humeur = (TextView) findViewById(R.id.textHumeur);
+                                humeur.setText(application.getUtilisateur().getHumeur().getTaux() + " ");
+                                TextView energie = (TextView) findViewById(R.id.textEnergie);
+                                energie.setText(application.getUtilisateur().getEnergie().getTaux() + " ");
+                                TextView hygiene = (TextView) findViewById(R.id.textHygiene);
+                                hygiene.setText(application.getUtilisateur().getHygiene().getTaux() +" ");
+                                TextView satiete = (TextView) findViewById(R.id.textSatiete);
+                                satiete.setText(application.getUtilisateur().getSatiete().getTaux() +" ");
+
                                 barreEnergie.setProgress(application.getUtilisateur().getEnergie().getTaux());
                                 barreSatiete.setProgress(application.getUtilisateur().getSatiete().getTaux());
                                 barreHygiene.setProgress(application.getUtilisateur().getHygiene().getTaux());
@@ -161,6 +170,40 @@ public class ChambreActivity extends AppCompatActivity {
         });
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
+    }
+
+    public void clicqueBtnCompetences(View w){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ChambreActivity.this);
+        alertDialogBuilder.setTitle("Vos compétences :");
+
+        LinearLayout layoutGlobal = new LinearLayout(this);
+        layoutGlobal.setOrientation(LinearLayout.VERTICAL);
+
+        for(int i = 0; i< listcomp.size();i++){
+            LinearLayout layout = new LinearLayout(this);
+            layout.setOrientation(LinearLayout.HORIZONTAL);
+
+            TextView text = new TextView(this);
+            text.setText(listcomp.get(i).getNom()+"  ");
+
+            ProgressBar progbar = new ProgressBar(getApplicationContext(), null, android.R.attr.progressBarStyleHorizontal);
+            progbar.setProgress(listcomp.get(i).getTauxMaitrise());
+
+
+            TextView text2 = new TextView(this);
+            text2.setText(listcomp.get(i).getTauxMaitrise()+ " ");
+
+            layout.addView(text);
+            layout.addView(text2);
+
+            layoutGlobal.addView(layout);
+            layoutGlobal.addView(progbar);
+        }
+
+        alertDialogBuilder.setView(layoutGlobal);
+        AlertDialog alertD = alertDialogBuilder.create();
+        alertD.show();
+
     }
 
     public void cliqueBtnDouche(View w){

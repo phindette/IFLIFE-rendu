@@ -82,6 +82,7 @@
                 android:id="@+id/btnSkills"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="clicqueBtnCompetences"
                 app:srcCompat="@drawable/skills" />
 
             <ImageButton
