@@ -23,12 +23,6 @@ public class Utilisateur implements Serializable {
     private ArrayList<Competences> competences;
 
     @Ignore
-    private HashMap<Nourriture,Integer> inv_nourriture;
-
-    @Ignore
-    private ArrayList<Livres> inv_livres;
-
-    @Ignore
     private Statistique energie;
 
     @Ignore
@@ -43,6 +37,17 @@ public class Utilisateur implements Serializable {
     @Ignore
     private double argent;
 
+    @Ignore
+    private int nombreDSManque;
+
+    @Ignore
+    private HashMap<Nourriture,Integer> inv_nourriture;
+
+    @Ignore
+    private ArrayList<Livres> inv_livres;
+
+
+
     public Utilisateur(){
         energie = new Statistique("Energie");
         energie.setTaux(50);
@@ -53,10 +58,10 @@ public class Utilisateur implements Serializable {
         humeur = new Humeur();
         humeur.setTaux(50);
         competences = new ArrayList<Competences>();
+        argent = 100; //à changer
         inv_livres = new ArrayList<>();
         inv_nourriture = new HashMap<>();
-        argent = 100; //à changer
-
+        setNombreDSManque(0);
     }
     public void addCompetence(Competences competences){
         if(!this.competences.contains(competences)){
@@ -84,22 +89,44 @@ public class Utilisateur implements Serializable {
     public void acheterNourriture(Nourriture nourriture){
         if(nourriture.getCout() < this.getArgent()){
             retirerArgent(nourriture.getCout());
-            augmenterSatiete(nourriture.getMontantRegen());
+            ajouterNourriture(nourriture);
+            //augmenterSatiete(nourriture.getMontantRegen());
         }
     }
     public void acheterLivre(Livres livre){
         if(livre.getCout()<this.getArgent()){
             retirerArgent(livre.getCout());
-            int i = 0;
-            while(i < competences.size() && competences.get(i) != livre.getCompetence()){
+            ajouterLivre(livre);
+            System.out.println("Livre ajouté :"+ livre.getNom());
+//            int i = 0;
+/*            while(i < competences.size() && competences.get(i) != livre.getCompetence()){
                 i++;
             }
             if(competences.get(i) == livre.getCompetence()){
                 competences.get(i).augmenterTaux(livre.getAugmentation());
-            }
+            }*/
+        }
+    }
+    public void manger(Nourriture nourriture){
+        augmenterSatiete(nourriture.getMontantRegen());
+        int value = inv_nourriture.get(nourriture);
+        if(value == 1){
+            inv_nourriture.remove(nourriture);
+        }else{
+            inv_nourriture.put(nourriture,value-1);
         }
     }
 
+    public void reviser(Livres livre,int temps) {
+        int i = 0;
+        while (i < competences.size() && competences.get(i) != livre.getCompetence()) {
+            i++;
+        }
+        if (competences.get(i) == livre.getCompetence()) {
+            competences.get(i).augmenterTaux(livre.getAugmentation()*temps);
+
+        }
+    }
     public String getNom() {
         return nom;
     }
@@ -170,6 +197,24 @@ public class Utilisateur implements Serializable {
     }
 
     public void ajouterNourriture(Nourriture nourriture){
+        if(inv_nourriture.containsKey(nourriture)){
+            int value = inv_nourriture.get(nourriture);
+            inv_nourriture.remove(nourriture);
+            inv_nourriture.put(nourriture,value+1);
+        }else{
+            inv_nourriture.put(nourriture,1);
+        }
+    }
 
+    public HashMap<Nourriture,Integer> getInv_Nourriture(){
+        return inv_nourriture;
+    }
+
+    public int getNombreDSManque() {
+        return nombreDSManque;
+    }
+
+    public void setNombreDSManque(int nombreDSManque) {
+        this.nombreDSManque = nombreDSManque;
     }
 }

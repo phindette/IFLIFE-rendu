@@ -31,6 +31,9 @@ public class Partiel {
     private Competences competenceAPasser;
 
     @Ignore
+    private boolean reussit;
+
+    @Ignore
     private Context context;
 
     @Ignore
@@ -150,5 +153,13 @@ public class Partiel {
 
     public String getMoisDuDS() {
         return new DateFormatSymbols().getMonths()[dateDuDS.getMonth()-1];
+    }
+
+    public boolean isReussit() {
+        return reussit;
+    }
+
+    public void setReussit(boolean reussit) {
+        this.reussit = reussit;
     }
 }
