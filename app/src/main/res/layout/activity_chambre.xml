@@ -75,6 +75,7 @@
                 android:id="@+id/btnPurse"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="cliqueBtnShop"
                 app:srcCompat="@drawable/purse" />
 
             <ImageButton
@@ -117,6 +118,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@android:color/transparent"
+                            android:onClick="cliqueBtnDouche"
                             app:srcCompat="@drawable/shower2" />
 
                         <Space
@@ -167,6 +169,7 @@
                             android:layout_height="180dip"
                             android:adjustViewBounds="false"
                             android:background="@android:color/transparent"
+                            android:onClick="cliqueBtnDormir"
                             app:srcCompat="@drawable/lit" />
 
                         <Space
