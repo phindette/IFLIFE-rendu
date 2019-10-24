@@ -44,6 +44,7 @@ public class Calendrier {
     public int getJourDuMois(){ return calendar.get(Calendar.DAY_OF_MONTH);
     }
 
+
     public int getHeure(){return calendar.get(Calendar.HOUR_OF_DAY);}
     public int getMinutes(){return calendar.get(Calendar.MINUTE);}
 
