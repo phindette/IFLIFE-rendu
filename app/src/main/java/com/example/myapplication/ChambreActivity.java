@@ -354,11 +354,11 @@ public class ChambreActivity extends AppCompatActivity {
     }
 
     private void init_livres(){
-        Livres livreAdaN = new Livres("Manuel d'ada novice","Apprendre les bases de l'ada",10,10.5,listcomp.get(0));
+        Livres livreAdaN = new Livres("Manuel d'ada novice","Apprendre les bases de l'ada",10,10.5,listcomp.get(0),getApplicationContext());
         livres.add(livreAdaN);
-        Livres sqlN = new Livres("Manuel de postgress novice","Apprendre les bases de postgress",10,10.5,listcomp.get(1));
+        Livres sqlN = new Livres("Manuel de postgress novice","Apprendre les bases de postgress",10,10.5,listcomp.get(1),getApplicationContext());
         livres.add(sqlN);
-        Livres htmlcssN = new Livres("Manuel d'html/css novice","Apprendre les bases de html/css",10,10.5,listcomp.get(2));
+        Livres htmlcssN = new Livres("Manuel d'html/css novice","Apprendre les bases de html/css",10,10.5,listcomp.get(2), getApplicationContext());
         livres.add(htmlcssN);
     }
 }

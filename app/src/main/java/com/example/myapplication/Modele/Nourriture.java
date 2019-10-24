@@ -25,12 +25,11 @@ public class Nourriture {
     @ColumnInfo(name = "cout")
     private double cout;
 
-
-    public Nourriture(String nom, String description, int montant, double prix) {
+    public Nourriture(String nom, String description, int montantRegen, double cout) {
         this.nom = nom;
         this.description = description;
-        this.montantRegen = montant;
-        this.cout = prix;
+        this.montantRegen = montantRegen;
+        this.cout = cout;
         this.pathImage = "";
     }
 
@@ -72,5 +71,13 @@ public class Nourriture {
 
     public void setCout(double prix) {
         this.cout = prix;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

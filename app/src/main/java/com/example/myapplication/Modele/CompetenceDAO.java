@@ -20,6 +20,9 @@ public interface CompetenceDAO {
     @Query("SELECT id FROM Competences WHERE nom=:competence")
     int getId(String competence);
 
+    @Query("SELECT * FROM Competences WHERE id=:competence")
+    Competences getById(int competence);
+
     @Insert
     void insert(Competences c);
 

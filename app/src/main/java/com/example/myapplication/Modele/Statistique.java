@@ -17,16 +17,24 @@ public class Statistique {
     private String nom;
 
     @ColumnInfo(name = "borneMin")
-    private int bornMin;
+    private int borneMin;
 
     @ColumnInfo(name = "borneMax")
     private int borneMax;
 
     Statistique(String nomstat){
         setNom(nomstat);
-        setBornMin(0);
+        setBorneMin(0);
         setBorneMax(100);
         setTaux(0);
+    }
+
+    Statistique(int id, int taux,String nom, int borneMin, int borneMax){
+        this.id = id;
+        setNom(nom);
+        setBorneMin(borneMin);
+        setBorneMax(borneMax);
+        setTaux(taux);
     }
     public void augmenterStat(int nbAjout){
         setTaux(getTaux() + nbAjout);
@@ -52,12 +60,12 @@ public class Statistique {
         this.nom = nom;
     }
 
-    public int getBornMin() {
-        return bornMin;
+    public int getBorneMin() {
+        return borneMin;
     }
 
-    public void setBornMin(int bornMin) {
-        this.bornMin = bornMin;
+    public void setBorneMin(int bornMin) {
+        this.borneMin = bornMin;
     }
 
     public int getBorneMax() {
@@ -66,5 +74,13 @@ public class Statistique {
 
     public void setBorneMax(int borneMax) {
         this.borneMax = borneMax;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

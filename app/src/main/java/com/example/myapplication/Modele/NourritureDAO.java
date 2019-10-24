@@ -23,7 +23,7 @@ public interface NourritureDAO {
     void insert(Nourriture n);
 
     @Insert
-    long[] insertAll(Nourriture n);
+    void insertAll(Nourriture n);
 
     @Delete
     void delete(Nourriture n);
