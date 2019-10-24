@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication.Modele.Competences;
+import com.example.myapplication.Modele.DataBaseClient;
 import com.example.myapplication.Modele.Livres;
 import com.example.myapplication.Modele.MyApplication;
 import com.example.myapplication.Modele.Nourriture;
@@ -338,16 +339,26 @@ public class ChambreActivity extends AppCompatActivity {
 
 
     private void init_nourriture(){
-        Nourriture tacosS = new Nourriture("Tacos simple","Sans tomates, sans salade et c'est parti !",60, 5.0);
-        nourritures.add(tacosS);
-        Nourriture kebab = new Nourriture("Kebab","La viande provient de nos campagnes, le pain de nos boulangers.",50, 5.0);
-        nourritures.add(kebab);
-        Nourriture tacosD = new Nourriture("Tacos double","Sans tomates, sans salade et double viande !",80, 6.5);
-        nourritures.add(tacosD);
-        Nourriture bkebab = new Nourriture("Big Kebab","La viande provient de nos campagnes, le pain de nos boulangers mais il est plus gros! ",60, 5.5);
-        nourritures.add(bkebab);
-        Nourriture patesausel = new Nourriture("Pates au sel","Efficace et pas cher, c'est les pates au sel que je préfère",30, 2.0);
-        nourritures.add(patesausel);
+
+
+        // Récupération du DatabaseClient
+        final DataBaseClient mDb = DataBaseClient.getInstance(getApplicationContext());
+
+        class GetNourriture extends AsyncTask<Void, Void, List<Nourriture>> {
+
+            @Override
+            protected List<Nourriture> doInBackground(Void... voids) {
+                List<Nourriture> c = mDb.getAppDatabase()
+                        .NourritureDao()
+                        .getAll();
+                return c;
+            }
+        }
+
+        try {
+            nourritures.addAll(new GetNourriture().execute().get());
+        }catch(Exception e){
+        }
     }
 
     private void init_competences(){

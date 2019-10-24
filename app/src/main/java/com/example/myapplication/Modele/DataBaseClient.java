@@ -51,6 +51,13 @@ public class DataBaseClient {
 
             //ajouter des lignes ici
 
+            //Nourritures     AJOUTER PATH IMAGE A LA PLACE DE "" EN 4E PARAMETRE
+            db.execSQL("INSERT INTO Nourriture (nom,description,montantRegen,pathImage,cout) VALUES(\"Tacos simple\",\"Sans tomates, sans salade et c'est parti !\",60,\"\", 5.0);");
+            db.execSQL("INSERT INTO Nourriture (nom,description,montantRegen,pathImage,cout) VALUES(\"Kebab\",\"La viande provient de nos campagnes, le pain de nos boulangers.\",50,\"\", 5.0);");
+            db.execSQL("INSERT INTO Nourriture (nom,description,montantRegen,pathImage,cout) VALUES(\"Tacos double\",\"Sans tomates, sans salade et double viande !\",80,\"\", 6.5);");
+            db.execSQL("INSERT INTO Nourriture (nom,description,montantRegen,pathImage,cout) VALUES(\"Big Kebab\",\"La viande provient de nos campagnes, le pain de nos boulangers mais il est plus gros! \",60,\"\", 5.5);");
+            db.execSQL("INSERT INTO Nourriture (nom,description,montantRegen,pathImage,cout) VALUES(\"Pates au sel\",\"Efficace et pas cher, c'est les pates au sel que je préfère\",30,\"\",2.0);");
+
         }
     };
 }
