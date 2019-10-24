@@ -250,8 +250,6 @@ public class ChambreActivity extends AppCompatActivity {
 
         }
 
-
-
         public void cliqueBtnDormir(View w){
         //FONCTION PERMETTANT A L'UTiLISATEUR DE DORMIR
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ChambreActivity.this);
