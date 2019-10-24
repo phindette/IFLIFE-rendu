@@ -6,6 +6,7 @@ import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 @Entity
 public class Utilisateur implements Serializable {
@@ -20,6 +21,12 @@ public class Utilisateur implements Serializable {
 
     @Ignore
     private ArrayList<Competences> competences;
+
+    @Ignore
+    private HashMap<Nourriture,Integer> inv_nourriture;
+
+    @Ignore
+    private ArrayList<Livres> inv_livres;
 
     @Ignore
     private Statistique energie;
@@ -46,7 +53,10 @@ public class Utilisateur implements Serializable {
         humeur = new Humeur();
         humeur.setTaux(50);
         competences = new ArrayList<Competences>();
+        inv_livres = new ArrayList<>();
+        inv_nourriture = new HashMap<>();
         argent = 100; //à changer
+
     }
     public void addCompetence(Competences competences){
         if(!this.competences.contains(competences)){
@@ -149,5 +159,17 @@ public class Utilisateur implements Serializable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public void ajouterLivre(Livres livre){
+        inv_livres.add(livre);
+    }
+
+    public ArrayList<Livres> getInv_livres() {
+        return inv_livres;
+    }
+
+    public void ajouterNourriture(Nourriture nourriture){
+
     }
 }
