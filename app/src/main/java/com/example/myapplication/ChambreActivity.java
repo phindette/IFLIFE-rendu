@@ -150,8 +150,68 @@ public class ChambreActivity extends AppCompatActivity {
         application.prendreDouche();
     }
 
+    public void cliqueRevision(View w) {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ChambreActivity.this);
+        alertDialogBuilder.setTitle("Que voulez-vous réviser?");
 
-    public void cliqueBtnDormir(View w){
+        ScrollView scrollView = new ScrollView(this);
+        LinearLayout layoutGlobal = new LinearLayout(this);
+        layoutGlobal.setOrientation(LinearLayout.VERTICAL);
+
+        for(int i = 0; i< application.getUtilisateur().getInv_livres().size();i++){
+            LinearLayout layout = new LinearLayout(this);
+            layout.setOrientation(LinearLayout.HORIZONTAL);
+
+            Button bouton = new Button(this);
+            bouton.setText(application.getUtilisateur().getInv_livres().get(i).getNom());
+
+
+
+            final Livres livre = application.getUtilisateur().getInv_livres().get(i);
+            bouton.setOnClickListener(new View.OnClickListener(){
+                public void onClick(View view){
+                    reviser(livre);
+                }
+            });
+            layout.addView(bouton);
+
+            layoutGlobal.addView(layout);
+        }
+
+        scrollView.addView(layoutGlobal);
+        alertDialogBuilder.setView(scrollView);
+        AlertDialog alertD = alertDialogBuilder.create();
+        alertD.show();
+
+    }
+
+        private  void reviser(final Livres livre){
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ChambreActivity.this);
+            alertDialogBuilder.setTitle("Combien d'heures voulez vous réviser");
+
+            final NumberPicker numberPicker = new NumberPicker(this);
+            numberPicker.setMaxValue(1);
+            numberPicker.setMinValue(5);
+            alertDialogBuilder.setView(numberPicker);
+
+            alertDialogBuilder.setPositiveButton("Valider", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    Toast.makeText(ChambreActivity.this,"Vous allez réivser : "+numberPicker.getValue()+" heures",Toast.LENGTH_SHORT).show();
+
+                    //Gestion du modèle
+                    application.getUtilisateur().reviser(livre,numberPicker.getValue());
+                    application.getCalendrier().ajouterHeure(numberPicker.getMaxValue());
+
+                }
+            });
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+
+        }
+
+
+
+        public void cliqueBtnDormir(View w){
         //FONCTION PERMETTANT A L'UTiLISATEUR DE DORMIR
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ChambreActivity.this);
         alertDialogBuilder.setTitle("Combien d'heures voulez vous dormir ?");
