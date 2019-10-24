@@ -10,6 +10,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -22,9 +23,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication.Modele.Competences;
+import com.example.myapplication.Modele.Date;
 import com.example.myapplication.Modele.Livres;
 import com.example.myapplication.Modele.MyApplication;
 import com.example.myapplication.Modele.Nourriture;
+import com.example.myapplication.Modele.Partiel;
+
+import org.w3c.dom.Text;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -74,6 +79,9 @@ public class ChambreActivity extends AppCompatActivity {
         init_competences();
         init_livres();
 
+        //Initialisation des examens
+        init_partiels();
+
         //Ligne de test pour les barres
         //application.getUtilisateur().augmenterSatiete(150);
 
@@ -114,8 +122,6 @@ public class ChambreActivity extends AppCompatActivity {
 
                                 //CALCUL DE L'HUMEUR
                                 application.getUtilisateur().getHumeur().calculerTaux(application.getUtilisateur().getEnergie(),application.getUtilisateur().getSatiete(),application.getUtilisateur().getHygiene());
-
-
                             }
                         });
                     }
@@ -213,6 +219,32 @@ public class ChambreActivity extends AppCompatActivity {
 
     }
 
+    public void cliqueBtnDate(View w){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ChambreActivity.this);
+        alertDialogBuilder.setTitle("Vos prochains test :");
+
+        LinearLayout layout = new LinearLayout(this);
+        layout.setGravity(Gravity.CENTER);
+        for(int i=0; i < application.getCalendrier().getPartiels().size();i++){
+            if(application.getCalendrier().getJourDuMois() <=application.getCalendrier().getPartiels().get(i).getDateDuDS().getDayOfMonth()  && application.getCalendrier().getIntMois() <= application.getCalendrier().getPartiels().get(i).getDateDuDS().getMonth()){
+                TextView textDS = new TextView(this);
+                textDS.setText(application.getCalendrier().getPartiels().get(i).getNom() +" le " +application.getCalendrier().getPartiels().get(i).getDateDuDS().getDayOfMonth() + " "+application.getCalendrier().getPartiels().get(i).getMoisDuDS());
+                textDS.setGravity(Gravity.CENTER);
+                layout.addView(textDS);
+            }
+
+        }
+
+
+
+        alertDialogBuilder.setView(layout);
+        AlertDialog alertD = alertDialogBuilder.create();
+
+
+
+
+        alertD.show();
+    }
     private void afficheShopNourriture(){
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ChambreActivity.this);
         alertDialogBuilder.setTitle("Choisir l'article à acheter");
@@ -336,7 +368,16 @@ public class ChambreActivity extends AppCompatActivity {
     }
 
 
+    private void init_partiels(){
+        Date dateDSAda = new Date();
+        dateDSAda.setDayOfMonth(2);
+        dateDSAda.setMinute(0);
+        dateDSAda.setYear(2020);
+        dateDSAda.setMonth(9);
 
+        Partiel partielAda = new Partiel("Examen d'ada",50,application.getUtilisateur().getCompetences().get(0),this,dateDSAda);
+        application.getCalendrier().ajouterPartiel(partielAda);
+    }
     private void init_nourriture(){
         Nourriture tacosS = new Nourriture("Tacos simple","Sans tomates, sans salade et c'est parti !",60, 5.0);
         nourritures.add(tacosS);
