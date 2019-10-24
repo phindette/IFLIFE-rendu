@@ -335,6 +335,11 @@ public class ChambreActivity extends AppCompatActivity {
                 textDS.setText(application.getCalendrier().getPartiels().get(i).getNom() +" le " +application.getCalendrier().getPartiels().get(i).getDateDuDS().getDayOfMonth() + " "+application.getCalendrier().getPartiels().get(i).getMoisDuDS());
                 textDS.setGravity(Gravity.CENTER);
                 layout.addView(textDS);
+
+                TextView textDS2 = new TextView(this);
+                textDS2.setText("Requiert une competence de : "+ application.getCalendrier().getPartiels().get(i).getTauxRequis());
+                textDS2.setGravity(Gravity.CENTER);
+                layout.addView(textDS2);
             }
 
         }
@@ -352,7 +357,55 @@ public class ChambreActivity extends AppCompatActivity {
 
     public void clickBtnCours(View w){
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ChambreActivity.this);
-        if(application.getCalendrier().getHeure() <= 8){
+        //Variable permettant de savoir si le joueur a un DS aujourd'hui
+        boolean ds = false;
+        int o=0;
+        for(int i=0; i < application.getCalendrier().getPartiels().size();i++){
+            if(application.getCalendrier().getJourDuMois() == application.getCalendrier().getPartiels().get(i).getDateDuDS().getDayOfMonth()  && application.getCalendrier().getIntMois() == application.getCalendrier().getPartiels().get(i).getDateDuDS().getMonth()){
+                ds = true;
+                o =i;
+            }
+        }
+        final Partiel partielAPasser =  application.getCalendrier().getPartiels().get(o);
+        if(application.getCalendrier().getHeure() <= 8 && ds){
+            //PARTIE POUR ALLER EN DS
+            alertDialogBuilder.setTitle("Voulez vous allez faire votre examen (vous reviendrez à 17 heures) ?");
+            alertDialogBuilder.setPositiveButton("Oui", new DialogInterface.OnClickListener(){
+                public void onClick(DialogInterface dialog, int which) {
+                    //Passer l'heure à 17
+                    application.getCalendrier().setHeureDeLaJournee(17);
+
+                    //Modification des stats de l'utilisateur d'energies
+                    application.getUtilisateur().getEnergie().setTaux(application.getUtilisateur().getEnergie().getTaux()/2);
+                    application.getUtilisateur().getHygiene().setTaux(application.getUtilisateur().getHygiene().getTaux()/2);
+                    application.getUtilisateur().getSatiete().setTaux(application.getUtilisateur().getSatiete().getTaux()/2);
+
+                    //Verification de la réussite de l'utilisateur
+                    if(partielAPasser.getCompetenceAPasser().getTauxMaitrise() >= partielAPasser.getTauxRequis()){
+                        int argentEnPlus;
+                        argentEnPlus = partielAPasser.getCompetenceAPasser().getTauxMaitrise() -partielAPasser.getTauxRequis();
+                        application.getUtilisateur().ajouterArgent(argentEnPlus);
+
+                        Toast.makeText(ChambreActivity.this,"Vous avec réussi votre examen, et avez empoché "+ argentEnPlus + " $",Toast.LENGTH_SHORT).show();
+                    }
+                    else{
+                        application.getUtilisateur().setNombreDSManque(application.getUtilisateur().getNombreDSManque()+1);
+                        Toast.makeText(ChambreActivity.this,"Vous avec raté votre examen plus que "+ (8-application.getUtilisateur().getNombreDSManque()) + " echecs avant l'exclusion",Toast.LENGTH_SHORT).show();
+
+                    }
+                }
+            });
+            alertDialogBuilder.setNegativeButton("J'abandonne cet examen", new DialogInterface.OnClickListener(){
+                public void onClick(DialogInterface dialog, int which) {
+                    application.getCalendrier().setHeureDeLaJournee(17);
+                    application.getUtilisateur().setNombreDSManque(application.getUtilisateur().getNombreDSManque()+1);
+
+                    Toast.makeText(ChambreActivity.this,"Vous décidez de ne pas aller en examen, il ne vous reste plus que "+ (8-application.getUtilisateur().getNombreDSManque()) + " echecs avant l'exclusion",Toast.LENGTH_SHORT).show();
+                    partielAPasser.setReussit(false);
+                }
+            });
+        }
+        else if(application.getCalendrier().getHeure() <= 8){
             //PARTIE POUR ALLER EN COURS
             alertDialogBuilder.setTitle("Voulez vous allez en cours (vous reviendrez à 17 heures) ?");
             alertDialogBuilder.setPositiveButton("Oui", new DialogInterface.OnClickListener(){
@@ -392,7 +445,7 @@ public class ChambreActivity extends AppCompatActivity {
         }
         else{
             //PARTIE POUR DIRE QUE L'UTILISATEUR A RATE LE COURS
-            alertDialogBuilder.setTitle("Vous avez raté le cours de la journée !");
+            alertDialogBuilder.setTitle(" Le cours de la journée est déjà passé !");
             alertDialogBuilder.setPositiveButton("Retour", new DialogInterface.OnClickListener(){
                 public void onClick(DialogInterface dialog, int which) {
 
@@ -533,12 +586,12 @@ public class ChambreActivity extends AppCompatActivity {
 
     private void init_partiels(){
         Date dateDSAda = new Date();
-        dateDSAda.setDayOfMonth(15);
+        dateDSAda.setDayOfMonth(2);
         dateDSAda.setMinute(0);
         dateDSAda.setYear(2020);
         dateDSAda.setMonth(9);
 
-        Partiel partielAda = new Partiel("Examen d'ada",50,application.getUtilisateur().getCompetences().get(0),this,dateDSAda);
+        Partiel partielAda = new Partiel("Examen d'ada",5,application.getUtilisateur().getCompetences().get(0),this,dateDSAda);
         application.getCalendrier().ajouterPartiel(partielAda);
     }
 
