@@ -370,7 +370,7 @@ public class ChambreActivity extends AppCompatActivity {
 
     private void init_partiels(){
         Date dateDSAda = new Date();
-        dateDSAda.setDayOfMonth(2);
+        dateDSAda.setDayOfMonth(15);
         dateDSAda.setMinute(0);
         dateDSAda.setYear(2020);
         dateDSAda.setMonth(9);
