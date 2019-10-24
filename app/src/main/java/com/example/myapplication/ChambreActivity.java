@@ -74,7 +74,6 @@ public class ChambreActivity extends AppCompatActivity {
         livres = new ArrayList<>();
         listcomp = new ArrayList<>();
         init_nourriture();
-        System.out.println("pute");
 
         //Initialisation des compétences et des livres (à modif en DAO)
         init_competences();
@@ -133,7 +132,6 @@ public class ChambreActivity extends AppCompatActivity {
                                 //CALCUL DE L'HUMEUR
                                 application.getUtilisateur().getHumeur().calculerTaux(application.getUtilisateur().getEnergie(),application.getUtilisateur().getSatiete(),application.getUtilisateur().getHygiene());
 
-
                             }
                         });
                     }
@@ -149,9 +147,6 @@ public class ChambreActivity extends AppCompatActivity {
 
     }
 
-    public void seDoucher(){
-        application.prendreDouche();
-    }
 
     public void cliqueManger(View w) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ChambreActivity.this);
@@ -244,7 +239,7 @@ public class ChambreActivity extends AppCompatActivity {
 
                     //Gestion du modèle
                     application.getUtilisateur().reviser(livre,numberPicker.getValue());
-                    application.getCalendrier().ajouterHeure(numberPicker.getMaxValue());
+                    application.getCalendrier().ajouterHeure(numberPicker.getValue());
 
                 }
             });
@@ -679,6 +674,7 @@ public class ChambreActivity extends AppCompatActivity {
         try {
             listcomp.addAll(new GetCompetences().execute().get());
             for(Competences cpt : listcomp){
+                System.out.println(cpt.getNom());
                 application.getUtilisateur().addCompetence(cpt);
             }
         }catch(Exception e){
@@ -705,6 +701,7 @@ public class ChambreActivity extends AppCompatActivity {
         try {
             livres.addAll(new GetNourriture().execute().get());
             for(Livres l : livres){
+
                 l.construireLivre(getApplicationContext());
             }
         }catch(Exception e){
