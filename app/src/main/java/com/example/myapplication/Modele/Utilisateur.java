@@ -126,7 +126,7 @@ public class Utilisateur implements Serializable {
             competences.get(i).augmenterTaux(livre.getAugmentation()*temps);
         }
     }
-    
+
     public String getNom() {
         return nom;
     }
@@ -135,7 +135,7 @@ public class Utilisateur implements Serializable {
         this.nom = nom;
     }
 
-    public String getSexe() {
+    public String getSexe(){
         return sexe;
     }
 
