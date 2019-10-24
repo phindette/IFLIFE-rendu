@@ -6,14 +6,19 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.Ignore;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
+
+import java.text.DateFormatSymbols;
+import java.util.Calendar;
 
 @Entity(foreignKeys = {
         @ForeignKey(
                 entity = Competences.class,
                 parentColumns = "id",
                 childColumns = "idCompetence"
-        )})
+        )},
+        indices = {@Index("idCompetence")})
 public class Partiel {
 
     @PrimaryKey(autoGenerate = true)
@@ -28,16 +33,20 @@ public class Partiel {
     @Ignore
     private Context context;
 
+    @Ignore
+    private Date dateDuDS;
+
     @ColumnInfo(name = "idCompetence")
     private int idCompetence;
 
     @ColumnInfo(name = "tauxRequis")
     private int tauxRequis;
 
-    Partiel(String nom, int tauxRequis, Competences cpt, Context context) {
+    public Partiel(String nom, int tauxRequis, Competences cpt, Context context,Date dateDS) {
         setNom(nom);
         setTauxRequis(tauxRequis);
         setCompetenceAPasser(cpt);
+        setDateDuDS(dateDS);
         this.context = context;
 
         // Récupération du DatabaseClient
@@ -129,5 +138,17 @@ public class Partiel {
 
     public void setIdCompetence(int idCompetence) {
         this.idCompetence = idCompetence;
+    }
+
+    public Date getDateDuDS() {
+        return dateDuDS;
+    }
+
+    public void setDateDuDS(Date dateDuDS) {
+        this.dateDuDS = dateDuDS;
+    }
+
+    public String getMoisDuDS() {
+        return new DateFormatSymbols().getMonths()[dateDuDS.getMonth()-1];
     }
 }

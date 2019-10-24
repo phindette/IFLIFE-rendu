@@ -69,7 +69,8 @@
                 android:id="@+id/btnSchedule"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/schedule" />
+                app:srcCompat="@drawable/schedule"
+                android:onClick="cliqueBtnDate"/>
 
             <ImageButton
                 android:id="@+id/btnPurse"
@@ -82,6 +83,7 @@
                 android:id="@+id/btnSkills"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="clicqueBtnCompetences"
                 app:srcCompat="@drawable/skills" />
 
             <ImageButton
@@ -161,7 +163,8 @@
                             android:layout_width="70dip"
                             android:layout_height="140dip"
                             android:background="@android:color/transparent"
-                            app:srcCompat="@drawable/books" />
+                            app:srcCompat="@drawable/books"
+                            />
 
                         <ImageButton
                             android:id="@+id/btnBed"
@@ -192,7 +195,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="80dip"
                             android:background="@android:color/transparent"
-                            app:srcCompat="@drawable/door" />
+                            app:srcCompat="@drawable/door"
+                            android:onClick="clickBtnCours"/>
 
                     </TableRow>
 
@@ -204,7 +208,8 @@
 
                     <TableRow
                         android:layout_width="match_parent"
-                        android:layout_height="100dip">
+                        android:layout_height="100dip"
+                        >
 
                         <ImageButton
                             android:id="@+id/btnComputer"

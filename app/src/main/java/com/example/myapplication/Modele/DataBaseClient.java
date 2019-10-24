@@ -58,6 +58,15 @@ public class DataBaseClient {
             db.execSQL("INSERT INTO Nourriture (nom,description,montantRegen,pathImage,cout) VALUES(\"Big Kebab\",\"La viande provient de nos campagnes, le pain de nos boulangers mais il est plus gros! \",60,\"\", 5.5);");
             db.execSQL("INSERT INTO Nourriture (nom,description,montantRegen,pathImage,cout) VALUES(\"Pates au sel\",\"Efficace et pas cher, c'est les pates au sel que je préfère\",30,\"\",2.0);");
 
+            //Competences
+            db.execSQL("INSERT INTO Competences (nom,tauxMaitrise) VALUES(\"Ada\",0);");
+            db.execSQL("INSERT INTO Competences (nom,tauxMaitrise) VALUES(\"Postgress\",0);");
+            db.execSQL("INSERT INTO Competences (nom,tauxMaitrise) VALUES(\"html/css\",0);");
+
+            //Livres
+            db.execSQL("INSERT INTO Livres (nom,description,augmentation,cout,idCompetence,pathImage) VALUES(\"Manuel d'ada novice\",\"Apprendre les bases de l'ada\",10,10.5,(SELECT id from Competences where nom='Ada'),\"\");");
+            db.execSQL("INSERT INTO Livres (nom,description,augmentation,cout,idCompetence,pathImage) VALUES(\"Manuel de postgress novice\",\"Apprendre les bases de postgress\",10,10.5,(SELECT id from Competences where nom='Postgress'),\"\");");
+            db.execSQL("INSERT INTO Livres (nom,description,augmentation,cout,idCompetence,pathImage) VALUES(\"Manuel d'html/css novice\",\"Apprendre les bases de html/css\",10,10.5,(SELECT id from Competences where nom='html/css'),\"\");");
         }
     };
 }

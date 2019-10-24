@@ -10,6 +10,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -23,9 +24,13 @@ import android.widget.Toast;
 
 import com.example.myapplication.Modele.Competences;
 import com.example.myapplication.Modele.DataBaseClient;
+import com.example.myapplication.Modele.Date;
 import com.example.myapplication.Modele.Livres;
 import com.example.myapplication.Modele.MyApplication;
 import com.example.myapplication.Modele.Nourriture;
+import com.example.myapplication.Modele.Partiel;
+
+import org.w3c.dom.Text;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -75,6 +80,9 @@ public class ChambreActivity extends AppCompatActivity {
         init_competences();
         init_livres();
 
+        //Initialisation des examens
+        init_partiels();
+
         //Ligne de test pour les barres
         //application.getUtilisateur().augmenterSatiete(150);
 
@@ -106,6 +114,15 @@ public class ChambreActivity extends AppCompatActivity {
                                 textHour.setText(application.getCalendrier().getHeure()+":"+application.getCalendrier().getMinutes());
 
                                 //UPDATE DES PROGRESS BAR
+                                TextView humeur = (TextView) findViewById(R.id.textHumeur);
+                                humeur.setText(application.getUtilisateur().getHumeur().getTaux() + " ");
+                                TextView energie = (TextView) findViewById(R.id.textEnergie);
+                                energie.setText(application.getUtilisateur().getEnergie().getTaux() + " ");
+                                TextView hygiene = (TextView) findViewById(R.id.textHygiene);
+                                hygiene.setText(application.getUtilisateur().getHygiene().getTaux() +" ");
+                                TextView satiete = (TextView) findViewById(R.id.textSatiete);
+                                satiete.setText(application.getUtilisateur().getSatiete().getTaux() +" ");
+
                                 barreEnergie.setProgress(application.getUtilisateur().getEnergie().getTaux());
                                 barreSatiete.setProgress(application.getUtilisateur().getSatiete().getTaux());
                                 barreHygiene.setProgress(application.getUtilisateur().getHygiene().getTaux());
@@ -135,6 +152,7 @@ public class ChambreActivity extends AppCompatActivity {
     public void seDoucher(){
         application.prendreDouche();
     }
+
 
     public void cliqueBtnDormir(View w){
         //FONCTION PERMETTANT A L'UTiLISATEUR DE DORMIR
@@ -171,6 +189,40 @@ public class ChambreActivity extends AppCompatActivity {
         });
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
+    }
+
+    public void clicqueBtnCompetences(View w){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ChambreActivity.this);
+        alertDialogBuilder.setTitle("Vos compétences :");
+
+        LinearLayout layoutGlobal = new LinearLayout(this);
+        layoutGlobal.setOrientation(LinearLayout.VERTICAL);
+
+        for(int i = 0; i< listcomp.size();i++){
+            LinearLayout layout = new LinearLayout(this);
+            layout.setOrientation(LinearLayout.HORIZONTAL);
+
+            TextView text = new TextView(this);
+            text.setText(listcomp.get(i).getNom()+"  ");
+
+            ProgressBar progbar = new ProgressBar(getApplicationContext(), null, android.R.attr.progressBarStyleHorizontal);
+            progbar.setProgress(listcomp.get(i).getTauxMaitrise());
+
+
+            TextView text2 = new TextView(this);
+            text2.setText(listcomp.get(i).getTauxMaitrise()+ " ");
+
+            layout.addView(text);
+            layout.addView(text2);
+
+            layoutGlobal.addView(layout);
+            layoutGlobal.addView(progbar);
+        }
+
+        alertDialogBuilder.setView(layoutGlobal);
+        AlertDialog alertD = alertDialogBuilder.create();
+        alertD.show();
+
     }
 
     public void cliqueBtnDouche(View w){
@@ -212,6 +264,91 @@ public class ChambreActivity extends AppCompatActivity {
         alertD.show();
 
 
+    }
+
+    public void cliqueBtnDate(View w){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ChambreActivity.this);
+        alertDialogBuilder.setTitle("Vos prochains test :");
+
+        LinearLayout layout = new LinearLayout(this);
+        layout.setGravity(Gravity.CENTER);
+        for(int i=0; i < application.getCalendrier().getPartiels().size();i++){
+            if(application.getCalendrier().getJourDuMois() <=application.getCalendrier().getPartiels().get(i).getDateDuDS().getDayOfMonth()  && application.getCalendrier().getIntMois() <= application.getCalendrier().getPartiels().get(i).getDateDuDS().getMonth()){
+                TextView textDS = new TextView(this);
+                textDS.setText(application.getCalendrier().getPartiels().get(i).getNom() +" le " +application.getCalendrier().getPartiels().get(i).getDateDuDS().getDayOfMonth() + " "+application.getCalendrier().getPartiels().get(i).getMoisDuDS());
+                textDS.setGravity(Gravity.CENTER);
+                layout.addView(textDS);
+            }
+
+        }
+
+
+
+        alertDialogBuilder.setView(layout);
+        AlertDialog alertD = alertDialogBuilder.create();
+
+
+
+
+        alertD.show();
+    }
+
+    public void clickBtnCours(View w){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ChambreActivity.this);
+        if(application.getCalendrier().getHeure() <= 8){
+            //PARTIE POUR ALLER EN COURS
+            alertDialogBuilder.setTitle("Voulez vous allez en cours (vous reviendrez à 17 heures) ?");
+            alertDialogBuilder.setPositiveButton("Oui", new DialogInterface.OnClickListener(){
+                public void onClick(DialogInterface dialog, int which) {
+                    //Passer l'heure à 17
+                    application.getCalendrier().setHeureDeLaJournee(17);
+
+                    //Modification des stats de l'utilisateur d'energies
+                    application.getUtilisateur().getEnergie().setTaux(application.getUtilisateur().getEnergie().getTaux()/2);
+                    application.getUtilisateur().getHygiene().setTaux(application.getUtilisateur().getHygiene().getTaux()/2);
+                    application.getUtilisateur().getSatiete().setTaux(application.getUtilisateur().getSatiete().getTaux()/2);
+
+                    //Modification des stats de l'utlisateur
+                    for(int i =0;i < application.getUtilisateur().getCompetences().size();i++){
+                        if(application.getUtilisateur().getHumeur().getTaux() <= 25){
+                            application.getUtilisateur().getCompetences().get(i).augmenterTaux(5);
+                        }
+                        else if(application.getUtilisateur().getHumeur().getTaux() <= 50){
+                            application.getUtilisateur().getCompetences().get(i).augmenterTaux(10);
+                        }
+                        else if(application.getUtilisateur().getHumeur().getTaux() <= 75){
+                            application.getUtilisateur().getCompetences().get(i).augmenterTaux(15);
+                        }
+                        else if(application.getUtilisateur().getHumeur().getTaux() > 75){
+                            application.getUtilisateur().getCompetences().get(i).augmenterTaux(20);
+                        }
+                    }
+
+                    Toast.makeText(ChambreActivity.this,"Vous êtes allé en cours",Toast.LENGTH_SHORT).show();
+                }
+            });
+            alertDialogBuilder.setNegativeButton("Non", new DialogInterface.OnClickListener(){
+                public void onClick(DialogInterface dialog, int which) {
+                    Toast.makeText(ChambreActivity.this,"Vous décidez de ne pas aller en cours pour le moment",Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+        else{
+            //PARTIE POUR DIRE QUE L'UTILISATEUR A RATE LE COURS
+            alertDialogBuilder.setTitle("Vous avez raté le cours de la journée !");
+            alertDialogBuilder.setPositiveButton("Retour", new DialogInterface.OnClickListener(){
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            });
+        }
+
+
+
+
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 
     private void afficheShopNourriture(){
@@ -337,6 +474,16 @@ public class ChambreActivity extends AppCompatActivity {
     }
 
 
+    private void init_partiels(){
+        Date dateDSAda = new Date();
+        dateDSAda.setDayOfMonth(15);
+        dateDSAda.setMinute(0);
+        dateDSAda.setYear(2020);
+        dateDSAda.setMonth(9);
+
+        Partiel partielAda = new Partiel("Examen d'ada",50,application.getUtilisateur().getCompetences().get(0),this,dateDSAda);
+        application.getCalendrier().ajouterPartiel(partielAda);
+    }
 
     private void init_nourriture(){
 
@@ -362,23 +509,68 @@ public class ChambreActivity extends AppCompatActivity {
     }
 
     private void init_competences(){
-        Competences ada = new Competences("Ada",0);
-        application.getUtilisateur().addCompetence(ada);
-        listcomp.add(ada);
-        Competences sql = new Competences("Postgress",0);
-        application.getUtilisateur().addCompetence(sql);
-        listcomp.add(sql);
-        Competences htmlcss = new Competences("html/css",0);
-        application.getUtilisateur().addCompetence(htmlcss);
-        listcomp.add(htmlcss);
+//        Competences ada = new Competences("Ada",0);
+//        application.getUtilisateur().addCompetence(ada);
+//        listcomp.add(ada);
+//        Competences sql = new Competences("Postgress",0);
+//        application.getUtilisateur().addCompetence(sql);
+//        listcomp.add(sql);
+//        Competences htmlcss = new Competences("html/css",0);
+//        application.getUtilisateur().addCompetence(htmlcss);
+//        listcomp.add(htmlcss);
+
+        // Récupération du DatabaseClient
+        final DataBaseClient mDb = DataBaseClient.getInstance(getApplicationContext());
+
+        class GetCompetences extends AsyncTask<Void, Void, List<Competences>> {
+
+            @Override
+            protected List<Competences> doInBackground(Void... voids) {
+                List<Competences> c = mDb.getAppDatabase()
+                        .CompetenceDao()
+                        .getAll();
+                return c;
+            }
+        }
+
+        try {
+            listcomp.addAll(new GetCompetences().execute().get());
+            for(Competences cpt : listcomp){
+                application.getUtilisateur().addCompetence(cpt);
+            }
+        }catch(Exception e){
+        }
+
     }
 
     private void init_livres(){
-        Livres livreAdaN = new Livres("Manuel d'ada novice","Apprendre les bases de l'ada",10,10.5,listcomp.get(0),getApplicationContext());
-        livres.add(livreAdaN);
-        Livres sqlN = new Livres("Manuel de postgress novice","Apprendre les bases de postgress",10,10.5,listcomp.get(1),getApplicationContext());
-        livres.add(sqlN);
-        Livres htmlcssN = new Livres("Manuel d'html/css novice","Apprendre les bases de html/css",10,10.5,listcomp.get(2), getApplicationContext());
-        livres.add(htmlcssN);
+//        Livres livreAdaN = new Livres("Manuel d'ada novice","Apprendre les bases de l'ada",10,10.5,listcomp.get(0),getApplicationContext());
+//        livres.add(livreAdaN);
+//        Livres sqlN = new Livres("Manuel de postgress novice","Apprendre les bases de postgress",10,10.5,listcomp.get(1),getApplicationContext());
+//        livres.add(sqlN);
+//        Livres htmlcssN = new Livres("Manuel d'html/css novice","Apprendre les bases de html/css",10,10.5,listcomp.get(2), getApplicationContext());
+//        livres.add(htmlcssN);
+
+        // Récupération du DatabaseClient
+        final DataBaseClient mDb = DataBaseClient.getInstance(getApplicationContext());
+
+        class GetNourriture extends AsyncTask<Void, Void, List<Livres>> {
+
+            @Override
+            protected List<Livres> doInBackground(Void... voids) {
+                List<Livres> c = mDb.getAppDatabase()
+                        .LivresDao()
+                        .getAll();
+                return c;
+            }
+        }
+
+        try {
+            livres.addAll(new GetNourriture().execute().get());
+            for(Livres l : livres){
+                l.construireLivre(getApplicationContext());
+            }
+        }catch(Exception e){
+        }
     }
 }

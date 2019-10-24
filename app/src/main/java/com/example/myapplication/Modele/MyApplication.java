@@ -6,7 +6,6 @@ public class MyApplication {
     private Statistique energie;
     private Statistique satiete;
     private Statistique hygiene;
-    private Humeur humeur;
     private Calendrier calendrier;
     private Utilisateur utilisateur;
 
@@ -21,7 +20,6 @@ public class MyApplication {
 
 
     public MyApplication(){
-        humeur = new Humeur();
         calendrier = new Calendrier();
         utilisateur = new Utilisateur();
 
@@ -64,9 +62,6 @@ public class MyApplication {
         return hygiene;
     }
 
-    public Humeur getHumeur() {
-        return humeur;
-    }
 
     public Calendrier getCalendrier() {
         return calendrier;
