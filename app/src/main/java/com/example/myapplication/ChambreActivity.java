@@ -190,8 +190,8 @@ public class ChambreActivity extends AppCompatActivity {
             alertDialogBuilder.setTitle("Combien d'heures voulez vous réviser");
 
             final NumberPicker numberPicker = new NumberPicker(this);
-            numberPicker.setMaxValue(1);
-            numberPicker.setMinValue(5);
+            numberPicker.setMaxValue(5);
+            numberPicker.setMinValue(1);
             alertDialogBuilder.setView(numberPicker);
 
             alertDialogBuilder.setPositiveButton("Valider", new DialogInterface.OnClickListener() {
@@ -208,8 +208,6 @@ public class ChambreActivity extends AppCompatActivity {
             alertDialog.show();
 
         }
-
-
 
         public void cliqueBtnDormir(View w){
         //FONCTION PERMETTANT A L'UTiLISATEUR DE DORMIR
