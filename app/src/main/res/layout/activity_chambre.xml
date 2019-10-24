@@ -69,7 +69,8 @@
                 android:id="@+id/btnSchedule"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/schedule" />
+                app:srcCompat="@drawable/schedule"
+                android:onClick="cliqueBtnDate"/>
 
             <ImageButton
                 android:id="@+id/btnPurse"

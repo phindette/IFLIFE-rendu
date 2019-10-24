@@ -139,7 +139,7 @@ public class Utilisateur implements Serializable {
     }
 
 
-    public Statistique getHumeur(){
+    public Humeur getHumeur(){
         return humeur;
     }
 

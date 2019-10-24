@@ -6,9 +6,9 @@ public class Humeur extends Statistique{
         super("Humeur");
     }
 
-    @Override
-    public int getTaux() {
-        int t = super.getTaux();
-        return (int)(t*5/100) + 1;
+    public void calculerTaux(Statistique cEnergie,Statistique cSatiete,Statistique cHygiene){
+        int t;
+        t =  (cEnergie.getTaux()/3 + cSatiete.getTaux()/3 + cHygiene.getTaux()/3);
+        setTaux(t);
     }
 }
