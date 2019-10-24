@@ -29,6 +29,7 @@ import com.example.myapplication.Modele.Nourriture;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
 public class ChambreActivity extends AppCompatActivity {
@@ -107,6 +108,14 @@ public class ChambreActivity extends AppCompatActivity {
                                 barreEnergie.setProgress(application.getUtilisateur().getEnergie().getTaux());
                                 barreSatiete.setProgress(application.getUtilisateur().getSatiete().getTaux());
                                 barreHygiene.setProgress(application.getUtilisateur().getHygiene().getTaux());
+                                barreHumeur.setProgress(application.getUtilisateur().getHumeur().getTaux());
+
+                                //boolean c = true;
+
+                                //CALCUL DE L'HUMEUR
+                                application.getUtilisateur().getHumeur().calculerTaux(application.getUtilisateur().getEnergie(),application.getUtilisateur().getSatiete(),application.getUtilisateur().getHygiene());
+
+
                             }
                         });
                     }
