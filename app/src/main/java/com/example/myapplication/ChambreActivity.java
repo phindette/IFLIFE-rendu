@@ -150,6 +150,47 @@ public class ChambreActivity extends AppCompatActivity {
         application.prendreDouche();
     }
 
+    public void cliqueManger(View w) {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ChambreActivity.this);
+        alertDialogBuilder.setTitle("Que voulez-vous manger?");
+
+        ScrollView scrollView = new ScrollView(this);
+        LinearLayout layoutGlobal = new LinearLayout(this);
+        layoutGlobal.setOrientation(LinearLayout.VERTICAL);
+
+        for(Nourriture n : application.getUtilisateur().getInv_Nourriture().keySet()){
+            LinearLayout layout = new LinearLayout(this);
+            layout.setOrientation(LinearLayout.HORIZONTAL);
+
+            final Button bouton = new Button(this);
+            bouton.setText(n.getNom() + " X "+application.getUtilisateur().getInv_Nourriture().get(n));
+
+            final Nourriture nourri = n;
+            bouton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    application.getUtilisateur().manger(nourri);
+                    if(application.getUtilisateur().getInv_Nourriture().get(nourri) == null){
+                        v.setVisibility(View.INVISIBLE);
+                    }else{
+                        bouton.setText(nourri.getNom() + " X "+application.getUtilisateur().getInv_Nourriture().get(nourri));
+                    }
+
+                }
+            });
+            layout.addView(bouton);
+            layoutGlobal.addView(layout);
+        }
+        scrollView.addView(layoutGlobal);
+        alertDialogBuilder.setView(scrollView);
+        AlertDialog alertD = alertDialogBuilder.create();
+        alertD.show();
+
+
+
+    }
+
+
     public void cliqueRevision(View w) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ChambreActivity.this);
         alertDialogBuilder.setTitle("Que voulez-vous réviser?");
@@ -190,8 +231,8 @@ public class ChambreActivity extends AppCompatActivity {
             alertDialogBuilder.setTitle("Combien d'heures voulez vous réviser");
 
             final NumberPicker numberPicker = new NumberPicker(this);
-            numberPicker.setMaxValue(1);
-            numberPicker.setMinValue(5);
+            numberPicker.setMaxValue(5);
+            numberPicker.setMinValue(1);
             alertDialogBuilder.setView(numberPicker);
 
             alertDialogBuilder.setPositiveButton("Valider", new DialogInterface.OnClickListener() {
@@ -495,7 +536,7 @@ public class ChambreActivity extends AppCompatActivity {
             }
             //ajout de la regen
             TextView regen = new TextView(this);
-            regen.setText("restore "+nourritures.get(i).getMontantRegen() + "points de nourriture");
+            regen.setText(nourritures.get(i).getNom()+" restore "+nourritures.get(i).getMontantRegen() + " points de nourriture");
             layout.addView(regen);
 
             //ajout du prix

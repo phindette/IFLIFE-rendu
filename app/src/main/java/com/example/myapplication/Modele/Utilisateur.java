@@ -107,6 +107,15 @@ public class Utilisateur implements Serializable {
             }*/
         }
     }
+    public void manger(Nourriture nourriture){
+        augmenterSatiete(nourriture.getMontantRegen());
+        int value = inv_nourriture.get(nourriture);
+        if(value == 1){
+            inv_nourriture.remove(nourriture);
+        }else{
+            inv_nourriture.put(nourriture,value-1);
+        }
+    }
 
     public void reviser(Livres livre,int temps) {
         int i = 0;

@@ -184,6 +184,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="130dip"
                             android:background="@android:color/transparent"
+                            android:onClick="cliqueManger"
                             app:srcCompat="@drawable/fridge" />
 
                         <Space
