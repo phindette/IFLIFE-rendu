@@ -70,16 +70,6 @@ public class Utilisateur implements Serializable {
 
     }
 
-    public void setAllComp(){
-        energie = new Statistique("Energie");
-        energie.setTaux(50);
-        satiete = new Statistique("Satiété");
-        satiete.setTaux(50);
-        hygiene = new Statistique("Hygiène");
-        hygiene.setTaux(50);
-        humeur = new Humeur();
-        humeur.setTaux(50);
-    }
 
     public double getArgent(){
         return argent;

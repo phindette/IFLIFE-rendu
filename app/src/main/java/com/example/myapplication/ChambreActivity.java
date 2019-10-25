@@ -149,7 +149,6 @@ public class ChambreActivity extends AppCompatActivity {
                 application.getUtilisateur().getCompetences().addAll(lCp);
             }
         }catch(Exception e){
-            application.getUtilisateur().setAllComp();
         }
 
         //PARTIE CONTROLE
