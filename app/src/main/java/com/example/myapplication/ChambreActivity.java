@@ -791,6 +791,11 @@ public class ChambreActivity extends AppCompatActivity {
 
         Partiel partielAda = new Partiel("Examen d'ada",5,application.getUtilisateur().getCompetences().get(0),this,dateDSAda);
         application.getCalendrier().ajouterPartiel(partielAda);
+
+        Date dateDSPost = new Date(2020,9,5,8,0);
+
+        Partiel partielpost = new Partiel("Examen de postgress",10,application.getUtilisateur().getCompetences().get(1),this,dateDSPost);
+        application.getCalendrier().ajouterPartiel(partielpost);
     }
 
     private void init_nourriture(){

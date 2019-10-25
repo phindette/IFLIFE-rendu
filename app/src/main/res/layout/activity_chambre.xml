@@ -235,15 +235,17 @@
 
         </FrameLayout>
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="5dip" />
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/testo"
             android:orientation="vertical">
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="15dip" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -315,8 +317,8 @@
                 <ProgressBar
                     android:id="@+id/energieBar"
                     style="@android:style/Widget.ProgressBar.Horizontal"
-                    android:layout_width="200dip"
-                    android:layout_height="22dip"
+                    android:layout_width="240dip"
+                    android:layout_height="30dip"
                     android:layout_gravity="center"
                     android:progress="50" />
 
@@ -377,8 +379,8 @@
                 <ProgressBar
                     android:id="@+id/satieteBar"
                     style="@android:style/Widget.ProgressBar.Horizontal"
-                    android:layout_width="200dip"
-                    android:layout_height="22dip"
+                    android:layout_width="240dip"
+                    android:layout_height="30dip"
                     android:layout_gravity="center"
                     android:progress="50" />
 
@@ -439,8 +441,8 @@
                 <ProgressBar
                     android:id="@+id/hygieneBar"
                     style="@android:style/Widget.ProgressBar.Horizontal"
-                    android:layout_width="200dip"
-                    android:layout_height="22dip"
+                    android:layout_width="240dip"
+                    android:layout_height="30dip"
                     android:layout_gravity="center"
                     android:progress="50" />
 
@@ -456,7 +458,7 @@
                     android:layout_marginBottom="0dp"
                     android:layout_toStartOf="@+id/hygieneBar"
                     android:layout_toLeftOf="@+id/hygieneBar"
-                    app:srcCompat="@drawable/dirty_clothes32" />
+                    app:srcCompat="@drawable/fringues_sales" />
 
                 <ImageView
                     android:id="@+id/imageHygiene100"

@@ -43,6 +43,8 @@ public class MyApplication {
 
     public void dormir(){
         getUtilisateur().augmenterEnergie(dormir.getStat());
+        getUtilisateur().getHygiene().setTaux(getUtilisateur().getHygiene().getTaux()/2);
+        getUtilisateur().getSatiete().setTaux(getUtilisateur().getSatiete().getTaux()/2);
         getCalendrier().ajouterHeure(dormir.getHeure());
     }
 
