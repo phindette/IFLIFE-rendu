@@ -21,7 +21,7 @@ public class MyApplication {
 
     public MyApplication(){
         calendrier = new Calendrier();
-        utilisateur = new Utilisateur();
+        utilisateur = new Utilisateur("Bertrand","h",100,0);
 
         setPrendreDouche(new Activite("Se doucher",50,1));
         setManger(new Activite("Se nourrir",50,0));

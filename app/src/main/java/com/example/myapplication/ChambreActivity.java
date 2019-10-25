@@ -173,6 +173,20 @@ public class ChambreActivity extends AppCompatActivity {
         sv.execute();
     }
 
+//    //sauvegarder l'utilisateur
+//    private void saveUser() {
+//        final DataBaseClient mDb = DataBaseClient.getInstance(getApplicationContext());
+//        class saveHeure extends AsyncTask<Void, Void, Void> {
+//            @Override
+//            protected Void doInBackground(Void... voids) {
+//                mDb.getAppDatabase().DateDao().insert(d);
+//                return null;
+//            }
+//        }
+//        saveHeure sv = new saveHeure();
+//        sv.execute();
+//    }
+
     //sauvegarder les statistiques
     private void saveStat(){
         final DataBaseClient mDb = DataBaseClient.getInstance(getApplicationContext());
@@ -247,6 +261,9 @@ public class ChambreActivity extends AppCompatActivity {
                         });
                     }
                 } catch (InterruptedException e) {
+                    saveComp();
+                    saveHeure();
+                    saveStat();
                 }
             }
         };
@@ -336,6 +353,8 @@ public class ChambreActivity extends AppCompatActivity {
         AlertDialog alertD = alertDialogBuilder.create();
         alertD.show();
 
+        saveComp();
+
     }
 
         private  void reviser(final Livres livre){
@@ -349,7 +368,7 @@ public class ChambreActivity extends AppCompatActivity {
 
             alertDialogBuilder.setPositiveButton("Valider", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
-                    Toast.makeText(ChambreActivity.this,"Vous allez réivser : "+numberPicker.getValue()+" heures",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ChambreActivity.this,"Vous allez réviser : "+numberPicker.getValue()+" heures",Toast.LENGTH_SHORT).show();
 
                     //Gestion du modèle
                     application.getUtilisateur().reviser(livre,numberPicker.getValue());
@@ -362,12 +381,9 @@ public class ChambreActivity extends AppCompatActivity {
                     saveHeure();
                     saveStat();
                     saveComp();
-
-
-
-
                 }
             });
+
 
             AlertDialog alertDialog = alertDialogBuilder.create();
             alertDialog.show();
@@ -418,6 +434,9 @@ public class ChambreActivity extends AppCompatActivity {
     }
 
     public void clicqueBtnCompetences(View w){
+
+        this.listcomp = application.getUtilisateur().getCompetences();
+
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ChambreActivity.this);
         alertDialogBuilder.setTitle("Vos compétences :");
 
@@ -527,6 +546,7 @@ public class ChambreActivity extends AppCompatActivity {
     }
 
     public void clickBtnCours(View w){
+        this.listcomp = application.getUtilisateur().getCompetences();
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ChambreActivity.this);
         //Variable permettant de savoir si le joueur a un DS aujourd'hui
         boolean ds = false;

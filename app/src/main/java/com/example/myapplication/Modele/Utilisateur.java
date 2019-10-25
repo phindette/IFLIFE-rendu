@@ -34,10 +34,10 @@ public class Utilisateur implements Serializable {
     @Ignore
     private Humeur humeur;
 
-    @Ignore
+    @ColumnInfo(name = "argent")
     private double argent;
 
-    @Ignore
+    @ColumnInfo(name = "nombreDsManque")
     private int nombreDSManque;
 
     @Ignore
@@ -48,7 +48,9 @@ public class Utilisateur implements Serializable {
 
 
 
-    public Utilisateur(){
+    public Utilisateur(String nom, String sexe, double argent, int nombreDSManque){
+        setNom(nom);
+        setSexe(sexe);
         energie = new Statistique("Energie");
         energie.setTaux(50);
         satiete = new Statistique("Satiété");
@@ -58,11 +60,12 @@ public class Utilisateur implements Serializable {
         humeur = new Humeur();
         humeur.setTaux(50);
         competences = new ArrayList<Competences>();
-        argent = 100; //à changer
+        this.argent = argent;
         inv_livres = new ArrayList<>();
         inv_nourriture = new HashMap<>();
-        setNombreDSManque(0);
+        setNombreDSManque(nombreDSManque);
     }
+
     public void addCompetence(Competences competences){
         if(!this.competences.contains(competences)){
             this.competences.add(competences);
