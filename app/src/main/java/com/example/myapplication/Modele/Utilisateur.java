@@ -119,14 +119,14 @@ public class Utilisateur implements Serializable {
 
     public void reviser(Livres livre,int temps) {
         int i = 0;
-        while (i < competences.size() && competences.get(i) != livre.getCompetence()) {
+        while (i < competences.size() && competences.get(i).getNom().compareTo(livre.getCompetence().getNom()) != 0) {
             i++;
         }
-        if (competences.get(i) == livre.getCompetence()) {
+        if(competences.get(i).getNom().compareTo(livre.getCompetence().getNom()) == 0){
             competences.get(i).augmenterTaux(livre.getAugmentation()*temps);
-
         }
     }
+
     public String getNom() {
         return nom;
     }
@@ -135,7 +135,7 @@ public class Utilisateur implements Serializable {
         this.nom = nom;
     }
 
-    public String getSexe() {
+    public String getSexe(){
         return sexe;
     }
 

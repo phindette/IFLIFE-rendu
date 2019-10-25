@@ -37,7 +37,12 @@ public class Statistique {
         setTaux(taux);
     }
     public void augmenterStat(int nbAjout){
-        setTaux(getTaux() + nbAjout);
+        if(getTaux()+nbAjout > borneMax){
+            setTaux(borneMax);
+        }else{
+            setTaux(getTaux() + nbAjout);
+        }
+
     }
 
     public void baisserStat(int nbEnlever){

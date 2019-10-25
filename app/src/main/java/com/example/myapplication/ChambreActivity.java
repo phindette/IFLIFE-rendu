@@ -74,7 +74,6 @@ public class ChambreActivity extends AppCompatActivity {
         livres = new ArrayList<>();
         listcomp = new ArrayList<>();
         init_nourriture();
-        System.out.println("pute");
 
         //Initialisation des compétences et des livres (à modif en DAO) ->fait
         init_competences();
@@ -165,7 +164,6 @@ public class ChambreActivity extends AppCompatActivity {
                                 //CALCUL DE L'HUMEUR
                                 application.getUtilisateur().getHumeur().calculerTaux(application.getUtilisateur().getEnergie(),application.getUtilisateur().getSatiete(),application.getUtilisateur().getHygiene());
 
-
                             }
                         });
                     }
@@ -181,10 +179,6 @@ public class ChambreActivity extends AppCompatActivity {
 
     }
 
-    public void seDoucher(){
-        application.prendreDouche();
-        saveHeure();
-    }
 
     public void cliqueManger(View w) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ChambreActivity.this);
@@ -199,7 +193,7 @@ public class ChambreActivity extends AppCompatActivity {
             layout.setOrientation(LinearLayout.HORIZONTAL);
 
             final Button bouton = new Button(this);
-            bouton.setText(n.getNom() + " X "+application.getUtilisateur().getInv_Nourriture().get(n));
+            bouton.setText(n.getNom() + " X "+application.getUtilisateur().getInv_Nourriture().get(n)+" qui restaure "+n.getMontantRegen()+" points");
 
             final Nourriture nourri = n;
             bouton.setOnClickListener(new View.OnClickListener() {
@@ -209,7 +203,7 @@ public class ChambreActivity extends AppCompatActivity {
                     if(application.getUtilisateur().getInv_Nourriture().get(nourri) == null){
                         v.setVisibility(View.INVISIBLE);
                     }else{
-                        bouton.setText(nourri.getNom() + " X "+application.getUtilisateur().getInv_Nourriture().get(nourri));
+                        bouton.setText(nourri.getNom() + " X "+application.getUtilisateur().getInv_Nourriture().get(nourri)+" qui restaure "+nourri.getMontantRegen()+" points");
                     }
 
                 }
@@ -277,6 +271,9 @@ public class ChambreActivity extends AppCompatActivity {
 
                     //Gestion du modèle
                     application.getUtilisateur().reviser(livre,numberPicker.getValue());
+                    application.getUtilisateur().getEnergie().setTaux(application.getUtilisateur().getEnergie().getTaux()/2);
+                    application.getUtilisateur().getHygiene().setTaux(application.getUtilisateur().getHygiene().getTaux()/2);
+                    application.getUtilisateur().getSatiete().setTaux(application.getUtilisateur().getSatiete().getTaux()/2);
                     application.getCalendrier().ajouterHeure(numberPicker.getValue());
                     saveHeure();
 
@@ -716,6 +713,7 @@ public class ChambreActivity extends AppCompatActivity {
         try {
             listcomp.addAll(new GetCompetences().execute().get());
             for(Competences cpt : listcomp){
+                System.out.println(cpt.getNom());
                 application.getUtilisateur().addCompetence(cpt);
             }
         }catch(Exception e){
@@ -742,6 +740,7 @@ public class ChambreActivity extends AppCompatActivity {
         try {
             livres.addAll(new GetNourriture().execute().get());
             for(Livres l : livres){
+
                 l.construireLivre(getApplicationContext());
             }
         }catch(Exception e){
