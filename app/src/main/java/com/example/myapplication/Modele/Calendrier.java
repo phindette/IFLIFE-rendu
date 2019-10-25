@@ -51,6 +51,8 @@ public class Calendrier {
 
     public int getIntMois(){return getCalendar().get(Calendar.MONTH);}
 
+    public int getAnnee(){return getCalendar().get(Calendar.YEAR);}
+
 
     public int getHeure(){return getCalendar().get(Calendar.HOUR_OF_DAY);}
 
@@ -78,5 +80,13 @@ public class Calendrier {
 
     public void setCalendar(Calendar calendar) {
         this.calendar = calendar;
+    }
+
+    public void setByDate(Date d) {
+        getCalendar().set(Calendar.YEAR,d.getYear());
+        getCalendar().set(Calendar.MONTH,d.getMonth());
+        getCalendar().set(Calendar.DAY_OF_MONTH,d.getDayOfMonth());
+        getCalendar().set(Calendar.HOUR_OF_DAY,d.getHourOfDay());
+        getCalendar().set(Calendar.MINUTE,d.getMinute());
     }
 }

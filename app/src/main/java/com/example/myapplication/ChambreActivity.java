@@ -76,7 +76,7 @@ public class ChambreActivity extends AppCompatActivity {
         init_nourriture();
         System.out.println("pute");
 
-        //Initialisation des compétences et des livres (à modif en DAO)
+        //Initialisation des compétences et des livres (à modif en DAO) ->fait
         init_competences();
         init_livres();
 
@@ -87,7 +87,27 @@ public class ChambreActivity extends AppCompatActivity {
         //application.getUtilisateur().augmenterSatiete(150);
 
 
+        // reprendre le jeu à la dernière save
 
+        final DataBaseClient mDb = DataBaseClient.getInstance(getApplicationContext());
+
+        class GetLastDate extends AsyncTask<Void, Void, Date> {
+
+            @Override
+            protected Date doInBackground(Void... voids) {
+                Date d = mDb.getAppDatabase().DateDao().getLast();
+                return d;
+            }
+        }
+
+        try {
+            Date d =new GetLastDate().execute().get();
+            if(d != null){
+                application.getCalendrier().setByDate(d);
+            }
+        }catch(Exception e){
+            application.getCalendrier().setByDate(new Date(2020,9,25,7,0));
+        }
 
 
         //PARTIE CONTROLE
@@ -95,6 +115,18 @@ public class ChambreActivity extends AppCompatActivity {
 
 
 
+    }
+
+    private void saveHeure() {
+        final DataBaseClient mDb = DataBaseClient.getInstance(getApplicationContext());
+        final Date d = new Date(application.getCalendrier().getAnnee(), application.getCalendrier().getIntMois(), application.getCalendrier().getJourDuMois(), application.getCalendrier().getHeure(), application.getCalendrier().getMinutes());
+        class saveHeure extends AsyncTask<Void, Void, Void> {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                mDb.getAppDatabase().DateDao().insert(d);
+                return null;
+            }
+        }
     }
 
 
@@ -151,6 +183,7 @@ public class ChambreActivity extends AppCompatActivity {
 
     public void seDoucher(){
         application.prendreDouche();
+        saveHeure();
     }
 
     public void cliqueManger(View w) {
@@ -244,7 +277,11 @@ public class ChambreActivity extends AppCompatActivity {
 
                     //Gestion du modèle
                     application.getUtilisateur().reviser(livre,numberPicker.getValue());
-                    application.getCalendrier().ajouterHeure(numberPicker.getMaxValue());
+                    application.getCalendrier().ajouterHeure(numberPicker.getValue());
+                    saveHeure();
+
+
+
 
                 }
             });
@@ -326,6 +363,7 @@ public class ChambreActivity extends AppCompatActivity {
 
     public void cliqueBtnDouche(View w){
         application.prendreDouche();
+        saveHeure();
     }
 
     public void cliqueBtnShop(View w){
@@ -416,6 +454,7 @@ public class ChambreActivity extends AppCompatActivity {
                 public void onClick(DialogInterface dialog, int which) {
                     //Passer l'heure à 17
                     application.getCalendrier().setHeureDeLaJournee(17);
+                    saveHeure();
 
                     //Modification des stats de l'utilisateur d'energies
                     application.getUtilisateur().getEnergie().setTaux(application.getUtilisateur().getEnergie().getTaux()/2);
@@ -440,6 +479,7 @@ public class ChambreActivity extends AppCompatActivity {
             alertDialogBuilder.setNegativeButton("J'abandonne cet examen", new DialogInterface.OnClickListener(){
                 public void onClick(DialogInterface dialog, int which) {
                     application.getCalendrier().setHeureDeLaJournee(17);
+                    saveHeure();
                     application.getUtilisateur().setNombreDSManque(application.getUtilisateur().getNombreDSManque()+1);
 
                     Toast.makeText(ChambreActivity.this,"Vous décidez de ne pas aller en examen, il ne vous reste plus que "+ (8-application.getUtilisateur().getNombreDSManque()) + " echecs avant l'exclusion",Toast.LENGTH_SHORT).show();
@@ -454,6 +494,7 @@ public class ChambreActivity extends AppCompatActivity {
                 public void onClick(DialogInterface dialog, int which) {
                     //Passer l'heure à 17
                     application.getCalendrier().setHeureDeLaJournee(17);
+                    saveHeure();
 
                     //Modification des stats de l'utilisateur d'energies
                     application.getUtilisateur().getEnergie().setTaux(application.getUtilisateur().getEnergie().getTaux()/2);
@@ -627,11 +668,7 @@ public class ChambreActivity extends AppCompatActivity {
 
 
     private void init_partiels(){
-        Date dateDSAda = new Date();
-        dateDSAda.setDayOfMonth(2);
-        dateDSAda.setMinute(0);
-        dateDSAda.setYear(2020);
-        dateDSAda.setMonth(9);
+        Date dateDSAda = new Date(2020,9,2,8,0);
 
         Partiel partielAda = new Partiel("Examen d'ada",5,application.getUtilisateur().getCompetences().get(0),this,dateDSAda);
         application.getCalendrier().ajouterPartiel(partielAda);

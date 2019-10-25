@@ -24,6 +24,14 @@ public class Date {
     @ColumnInfo(name = "minute")
     private int minute;
 
+    public Date(int year, int month, int dayOfMonth, int hourOfDay,int minute ){
+        setYear(year);
+        setMonth(month);
+        setDayOfMonth(dayOfMonth);
+        setHourOfDay(hourOfDay);
+        setMinute(minute);
+    }
+
     public int getId() {
         return id;
     }
