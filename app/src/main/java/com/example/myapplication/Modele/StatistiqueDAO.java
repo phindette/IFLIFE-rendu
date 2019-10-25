@@ -19,6 +19,9 @@ public interface StatistiqueDAO {
     @Query("SELECT * FROM Statistique order by id desc limit 1")
     Statistique getLast();
 
+    @Query("SELECT * FROM Statistique where nom=:stat order by id desc limit 1")
+    Statistique getLastByName(String stat);
+
     @Insert
     void insert(Statistique s);
 

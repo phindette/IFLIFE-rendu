@@ -29,6 +29,7 @@ import com.example.myapplication.Modele.Livres;
 import com.example.myapplication.Modele.MyApplication;
 import com.example.myapplication.Modele.Nourriture;
 import com.example.myapplication.Modele.Partiel;
+import com.example.myapplication.Modele.Statistique;
 
 import org.w3c.dom.Text;
 
@@ -85,11 +86,10 @@ public class ChambreActivity extends AppCompatActivity {
         //Ligne de test pour les barres
         //application.getUtilisateur().augmenterSatiete(150);
 
-
-        // reprendre le jeu à la dernière save
-
+        // get la database
         final DataBaseClient mDb = DataBaseClient.getInstance(getApplicationContext());
 
+        // reprendre le jeu à la dernière save
         class GetLastDate extends AsyncTask<Void, Void, Date> {
 
             @Override
@@ -105,8 +105,34 @@ public class ChambreActivity extends AppCompatActivity {
                 application.getCalendrier().setByDate(d);
             }
         }catch(Exception e){
-            application.getCalendrier().setByDate(new Date(2020,9,25,7,0));
+            application.getCalendrier().setByDate(new Date(2020,9,1,7,0));
         }
+
+        // reprendre les statistiques
+        class GetStats extends AsyncTask<Void, Void, ArrayList<Statistique>> {
+
+            @Override
+            protected ArrayList<Statistique> doInBackground(Void... voids) {
+                ArrayList<Statistique> lSt = new ArrayList<>();
+                lSt.add(mDb.getAppDatabase().StatistiqueDao().getLastByName("Energie"));
+                lSt.add(mDb.getAppDatabase().StatistiqueDao().getLastByName("Satiété"));
+                lSt.add(mDb.getAppDatabase().StatistiqueDao().getLastByName("Humeur"));
+                lSt.add(mDb.getAppDatabase().StatistiqueDao().getLastByName("Hygiène"));
+                return lSt;
+            }
+        }
+
+        try {
+            ArrayList<Statistique> ls = new GetStats().execute().get();
+            application.getUtilisateur().getEnergie().setTaux(ls.get(0).getTaux());
+            application.getUtilisateur().getSatiete().setTaux(ls.get(1).getTaux());
+            application.getUtilisateur().getHumeur().setTaux(ls.get(2).getTaux());
+            application.getUtilisateur().getHygiene().setTaux(ls.get(3).getTaux());
+        }catch(Exception e){
+        }
+
+        //reprendre les competences
+
 
 
         //PARTIE CONTROLE
@@ -116,6 +142,7 @@ public class ChambreActivity extends AppCompatActivity {
 
     }
 
+    //sauvegarder l'heure
     private void saveHeure() {
         final DataBaseClient mDb = DataBaseClient.getInstance(getApplicationContext());
         final Date d = new Date(application.getCalendrier().getAnnee(), application.getCalendrier().getIntMois(), application.getCalendrier().getJourDuMois(), application.getCalendrier().getHeure(), application.getCalendrier().getMinutes());
@@ -126,6 +153,26 @@ public class ChambreActivity extends AppCompatActivity {
                 return null;
             }
         }
+        saveHeure sv = new saveHeure();
+        sv.execute();
+    }
+
+    //sauvegarder les statistiques
+    private void saveStat(){
+        final DataBaseClient mDb = DataBaseClient.getInstance(getApplicationContext());
+          class saveStat extends AsyncTask<Void, Void, Void> {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                mDb.getAppDatabase().StatistiqueDao().insert(application.getUtilisateur().getEnergie());
+                mDb.getAppDatabase().StatistiqueDao().insert(application.getUtilisateur().getHumeur());
+                mDb.getAppDatabase().StatistiqueDao().insert(application.getUtilisateur().getHygiene());
+                mDb.getAppDatabase().StatistiqueDao().insert(application.getUtilisateur().getSatiete());
+
+                return null;
+            }
+        }
+        saveStat st = new saveStat();
+        st.execute();
     }
 
 
@@ -217,6 +264,9 @@ public class ChambreActivity extends AppCompatActivity {
         alertD.show();
 
 
+        //mettre a jour la db
+        saveStat();
+
 
     }
 
@@ -276,12 +326,17 @@ public class ChambreActivity extends AppCompatActivity {
                     application.getUtilisateur().getSatiete().setTaux(application.getUtilisateur().getSatiete().getTaux()/2);
                     application.getCalendrier().ajouterHeure(numberPicker.getValue());
                     saveHeure();
+                    saveStat();
 
 
 
 
                 }
             });
+
+            //mettre a jour la db
+            saveStat();
+
             AlertDialog alertDialog = alertDialogBuilder.create();
             alertDialog.show();
 
@@ -318,8 +373,14 @@ public class ChambreActivity extends AppCompatActivity {
                 }
                 application.dormir();
 
+                //mettre à jour la db
+                saveStat();
+                saveHeure();
             }
         });
+
+
+
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }
@@ -361,6 +422,7 @@ public class ChambreActivity extends AppCompatActivity {
     public void cliqueBtnDouche(View w){
         application.prendreDouche();
         saveHeure();
+        saveStat();
     }
 
     public void cliqueBtnShop(View w){
@@ -451,12 +513,17 @@ public class ChambreActivity extends AppCompatActivity {
                 public void onClick(DialogInterface dialog, int which) {
                     //Passer l'heure à 17
                     application.getCalendrier().setHeureDeLaJournee(17);
-                    saveHeure();
+
+
 
                     //Modification des stats de l'utilisateur d'energies
                     application.getUtilisateur().getEnergie().setTaux(application.getUtilisateur().getEnergie().getTaux()/2);
                     application.getUtilisateur().getHygiene().setTaux(application.getUtilisateur().getHygiene().getTaux()/2);
                     application.getUtilisateur().getSatiete().setTaux(application.getUtilisateur().getSatiete().getTaux()/2);
+
+                    //mettre a jour la db
+                    saveStat();
+                    saveHeure();
 
                     //Verification de la réussite de l'utilisateur
                     if(partielAPasser.getCompetenceAPasser().getTauxMaitrise() >= partielAPasser.getTauxRequis()){
@@ -476,8 +543,9 @@ public class ChambreActivity extends AppCompatActivity {
             alertDialogBuilder.setNegativeButton("J'abandonne cet examen", new DialogInterface.OnClickListener(){
                 public void onClick(DialogInterface dialog, int which) {
                     application.getCalendrier().setHeureDeLaJournee(17);
-                    saveHeure();
                     application.getUtilisateur().setNombreDSManque(application.getUtilisateur().getNombreDSManque()+1);
+                    //mettre a jour la db
+                    saveHeure();
 
                     Toast.makeText(ChambreActivity.this,"Vous décidez de ne pas aller en examen, il ne vous reste plus que "+ (8-application.getUtilisateur().getNombreDSManque()) + " echecs avant l'exclusion",Toast.LENGTH_SHORT).show();
                     partielAPasser.setReussit(false);
@@ -491,7 +559,6 @@ public class ChambreActivity extends AppCompatActivity {
                 public void onClick(DialogInterface dialog, int which) {
                     //Passer l'heure à 17
                     application.getCalendrier().setHeureDeLaJournee(17);
-                    saveHeure();
 
                     //Modification des stats de l'utilisateur d'energies
                     application.getUtilisateur().getEnergie().setTaux(application.getUtilisateur().getEnergie().getTaux()/2);
@@ -513,6 +580,9 @@ public class ChambreActivity extends AppCompatActivity {
                             application.getUtilisateur().getCompetences().get(i).augmenterTaux(20);
                         }
                     }
+                    //mettre a jour la db
+                    saveStat();
+                    saveHeure();
 
                     Toast.makeText(ChambreActivity.this,"Vous êtes allé en cours",Toast.LENGTH_SHORT).show();
                 }
@@ -532,7 +602,6 @@ public class ChambreActivity extends AppCompatActivity {
                 }
             });
         }
-
 
 
 
