@@ -132,8 +132,25 @@ public class ChambreActivity extends AppCompatActivity {
         }
 
         //reprendre les competences
+        class GetComps extends AsyncTask<Void, Void, ArrayList<Competences>> {
 
+            @Override
+            protected ArrayList<Competences> doInBackground(Void... voids) {
+                ArrayList<Competences> lCp = new ArrayList<>();
+                lCp.addAll(mDb.getAppDatabase().CompetenceDao().getAll());
+                return lCp;
+            }
+        }
 
+        try {
+            ArrayList<Competences> lCp = new GetComps().execute().get();
+            if(lCp.isEmpty() == false){
+                application.getUtilisateur().getCompetences().clear();
+                application.getUtilisateur().getCompetences().addAll(lCp);
+            }
+        }catch(Exception e){
+            application.getUtilisateur().setAllComp();
+        }
 
         //PARTIE CONTROLE
         jeu();
@@ -173,6 +190,22 @@ public class ChambreActivity extends AppCompatActivity {
         }
         saveStat st = new saveStat();
         st.execute();
+    }
+
+    //sauvegarder les competences
+    private void saveComp(){
+        final DataBaseClient mDb = DataBaseClient.getInstance(getApplicationContext());
+        class saveComp extends AsyncTask<Void, Void, Void> {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                for(Competences cpt : application.getUtilisateur().getCompetences()){
+                    mDb.getAppDatabase().CompetenceDao().update(cpt);
+                }
+                return null;
+            }
+        }
+        saveComp sc = new saveComp();
+        sc.execute();
     }
 
 
@@ -325,17 +358,17 @@ public class ChambreActivity extends AppCompatActivity {
                     application.getUtilisateur().getHygiene().setTaux(application.getUtilisateur().getHygiene().getTaux()/2);
                     application.getUtilisateur().getSatiete().setTaux(application.getUtilisateur().getSatiete().getTaux()/2);
                     application.getCalendrier().ajouterHeure(numberPicker.getValue());
+
+                    //mettre a jour la db
                     saveHeure();
                     saveStat();
+                    saveComp();
 
 
 
 
                 }
             });
-
-            //mettre a jour la db
-            saveStat();
 
             AlertDialog alertDialog = alertDialogBuilder.create();
             alertDialog.show();
@@ -583,6 +616,7 @@ public class ChambreActivity extends AppCompatActivity {
                     //mettre a jour la db
                     saveStat();
                     saveHeure();
+                    saveComp();
 
                     Toast.makeText(ChambreActivity.this,"Vous êtes allé en cours",Toast.LENGTH_SHORT).show();
                 }
